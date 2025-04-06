@@ -14,13 +14,13 @@ export default function Home() {
       </div>
       <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
         <Link
-          className="h-50 w-50 bg-[#ff8e3c] text-center cursor-pointer rounded-2xl text-2xl"
+          className="h-50 w-50 bg-[#ff8e3c] text-center cursor-pointer rounded-2xl text-2xl hover:transform hover:scale-105"
           to={"/cars"}
         >
           רכבים
         </Link>
         <Link
-          className="h-50 w-50 bg-[#ff8e3c] text-center cursor-pointer rounded-2xl text-2xl"
+          className="h-50 w-50 bg-[#ff8e3c] text-center cursor-pointer rounded-2xl text-2xl hover:transform hover:scale-105"
           to={"/electronics"}
         >
           אלקטרוניקה
