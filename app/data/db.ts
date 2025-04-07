@@ -25,10 +25,12 @@ export async function getProductByCategory(
   }
 }
 
-export async function getProductById(id: number): Promise<Product | undefined> {
+export async function getProductById(
+  productId: string
+): Promise<Product | undefined> {
   try {
-    const data = await getProducts();
-    const product = data.find((product) => product.id === id);
+    const data = await getProducts();    
+    const product = data.find((p) => p.id === productId);
     return product;
   } catch (err) {
     console.error("Error reading product:", err);

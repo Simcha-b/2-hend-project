@@ -1,5 +1,5 @@
 export interface Product {
-    id: number;
+    id: string;
     name: string;
     category: "car" | "electronics";
     price: number;
@@ -24,3 +24,4 @@ export interface Product {
     model: string;
     specifications?: Record<string, string>;
   }
+  export type ProductUnion = Car | Electronics;
