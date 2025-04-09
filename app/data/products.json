@@ -2,7 +2,7 @@
     {
       "id": "1",
       "name": "Toyota Corolla",
-      "category": "car",
+      "category": "cars",
       "price": 20000,
       "description": "רכב שמור במצב מצוין, טסט לשנה.",
       "condition": "Used",
@@ -21,7 +21,7 @@
     {
       "id": "2",
       "name": "Honda Civic",
-      "category": "car",
+      "category": "cars",
       "price": 18000,
       "description": "רכב במצב טוב, יד שנייה.",
       "condition": "Used",
@@ -84,7 +84,7 @@
     {
       "id": "5",
       "name": "Mazda 3",
-      "category": "car",
+      "category": "cars",
       "price": 22000,
       "description": "רכב שמור, יד ראשונה, מתחייב בבדיקה.",
       "condition": "Used",
@@ -126,7 +126,7 @@
     {
       "id": "7",
       "name": "BMW X5",
-      "category": "car",
+      "category": "cars",
       "price": 120000,
       "description": "רכב יוקרה במצב חדש, יד ראשונה, אחריות יבואן.",
       "condition": "New",
@@ -168,7 +168,7 @@
     {
       "id": "9",
       "name": "Toyota RAV4 Hybrid",
-      "category": "car",
+      "category": "cars",
       "price": 135000,
       "description": "רכב היברידי חסכוני בדלק, שמור כמו חדש.",
       "condition": "Used",

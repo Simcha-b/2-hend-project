@@ -1,10 +1,26 @@
+import { getProductById } from "~/data/db";
+import type { Route } from "./+types/productDetails";
+import { useLoaderData } from "react-router";
 import type { Car, Electronics } from "~/types/products";
 
-type ProductDetailsProps = {
-  product: Car | Electronics;
-};
+export async function loader({ params }: Route.LoaderArgs) {
+  const product = await getProductById(params.id!);
+  if (!product) {
+    throw new Response("Not Found", { status: 404 });
+  }
+  return { product };
+}
+function isCar(product: Car | Electronics): product is Car {
+  return product.category === "cars";
+}
 
-export default function ProductDetails({ product }: ProductDetailsProps) {
+function isElectronics(product: Car | Electronics): product is Electronics {
+  return product.category === "electronics";
+}
+
+export default function productDetails() {
+  const { product } = useLoaderData();
+  console.log(product);
   return (
     <div className="max-w-xl mx-auto bg-white shadow-md rounded-2xl p-6 space-y-4">
       <h2 className="text-2xl font-bold">{product.name}</h2>
@@ -16,7 +32,7 @@ export default function ProductDetails({ product }: ProductDetailsProps) {
         <p>מיקום: {product.sellerInfo.location}</p>
       </div>
 
-      {product.category === "car" && (
+      {isCar(product) && (
         <div className="pt-4 border-t">
           <h3 className="font-semibold text-lg">פרטי רכב</h3>
           <p>יצרן: {product.make}</p>
@@ -27,7 +43,7 @@ export default function ProductDetails({ product }: ProductDetailsProps) {
         </div>
       )}
 
-      {product.category === "electronics" && (
+      {isElectronics(product) && (
         <div className="pt-4 border-t">
           <h3 className="font-semibold text-lg">פרטי מוצר</h3>
           <p>מותג: {product.brand}</p>
@@ -36,7 +52,7 @@ export default function ProductDetails({ product }: ProductDetailsProps) {
             <ul className="list-disc list-inside mt-2">
               {Object.entries(product.specifications).map(([key, value]) => (
                 <li key={key}>
-                  <span className="font-medium">{key}:</span> {value}
+                  <span className="font-medium">{key}:</span> {value as string}
                 </li>
               ))}
             </ul>
