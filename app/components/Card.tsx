@@ -12,10 +12,6 @@ export default function Card({ product }: CardProps) {
       <Link
         to={`./${product.id}`}
         className="block"
-        onClick={(e) => {
-          console.log("Link clicked", product.category, product.id);
-          // e.preventDefault(); // אל תפעיל את זה, זה רק לבדיקה
-        }}
       >
         {" "}
         <div className="border border-amber-300 bg-amber-50 hover:bg-amber-100 transition rounded-2xl p-5 shadow-md hover:shadow-lg max-w-xs h-[350px]">

@@ -11,7 +11,7 @@ export async function getProducts(): Promise<Car[] | Electronics[]> {
     throw err;
   }
 }
-export async function getAllMakes(category: "cars" | "electronics") {
+export async function getAllMakes(category: string) {
   const products = await getProducts();
   const validMakes = products
     .map((product) => (category === "cars" ? product.make : product.brand))
@@ -25,8 +25,8 @@ export async function getAllMakes(category: "cars" | "electronics") {
 
 export async function getProductByCategory(
   category: string,
-  filters?: { used?: boolean; new?: boolean; makes?: string[]; q: string }
-): Promise<Product[] | undefined> {
+  filters: { used: boolean; new: boolean; makes?: string[]; q: string | null }
+): Promise<Product[]> {
   try {
     const data = await getProducts();
     let products = data.filter((product) => product.category === category);
@@ -36,7 +36,7 @@ export async function getProductByCategory(
         if (filters.new && product.condition !== "New") return false;
         if (filters.makes && filters.makes.length > 0) {
           return filters.makes.includes(
-            product.category === "cars" ? product.make : product.brand
+            category === "cars" ? product.make : product.brand
           );
         }
         return true;
@@ -46,7 +46,6 @@ export async function getProductByCategory(
       const query = filters.q.toLowerCase();
       products = products.filter((p) => p.name.toLowerCase().includes(query));
     }
-
     return products;
   } catch (err) {
     console.error("Error reading products", err);

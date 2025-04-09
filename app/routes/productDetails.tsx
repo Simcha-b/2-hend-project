@@ -26,11 +26,6 @@ export default function productDetails() {
       <h2 className="text-2xl font-bold">{product.name}</h2>
       <p className="text-gray-600">₪{product.price.toLocaleString()}</p>
       <p className="text-gray-700">{product.description}</p>
-      <div className="border-t pt-4 text-sm text-gray-500">
-        <p>מצב: {product.condition}</p>
-        <p>איש קשר: {product.sellerInfo.name}</p>
-        <p>מיקום: {product.sellerInfo.location}</p>
-      </div>
 
       {isCar(product) && (
         <div className="pt-4 border-t">
@@ -59,6 +54,11 @@ export default function productDetails() {
           )}
         </div>
       )}
+      <div className="border-t pt-4 text-sm text-gray-500">
+        <p>מצב: {product.condition}</p>
+        <p>איש קשר: {product.sellerInfo.name}</p>
+        <p>מיקום: {product.sellerInfo.location}</p>
+      </div>
     </div>
   );
 }
