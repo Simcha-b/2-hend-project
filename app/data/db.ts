@@ -22,10 +22,35 @@ export async function getAllMakes(category: string) {
 
   return allMakes;
 }
+export async function getPriceRange(
+  category: string
+): Promise<{ minPrice: number; maxPrice: number }> {
+  try {
+    const products = await getProducts();
+    const filteredProducts = products.filter(
+      (product) => product.category === category
+    );
+
+    const prices = filteredProducts.map((product) => product.price);
+    const minPrice = Math.min(...prices);
+    const maxPrice = Math.max(...prices);
+
+    return { minPrice, maxPrice };
+  } catch (err) {
+    console.error("Error calculating price range:", err);
+    throw err;
+  }
+}
 
 export async function getProductByCategory(
   category: string,
-  filters: { used: boolean; new: boolean; makes?: string[]; q: string | null }
+  filters: {
+    used: boolean;
+    new: boolean;
+    makes?: string[];
+    maxPrice?: number | null;
+    q: string | null;
+  }
 ): Promise<Product[]> {
   try {
     const data = await getProducts();
@@ -41,6 +66,11 @@ export async function getProductByCategory(
         }
         return true;
       });
+    }
+    if (filters?.maxPrice) {
+      products = products.filter(
+        (product) => product.price <= filters.maxPrice
+      );
     }
     if (filters?.q && filters.q.trim().length > 0) {
       const query = filters.q.toLowerCase();

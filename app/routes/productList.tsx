@@ -1,5 +1,4 @@
-// routes/categoryPage.tsx
-import { getAllMakes, getProductByCategory } from "../data/db";
+import { getAllMakes, getPriceRange, getProductByCategory } from "../data/db";
 import Card from "../components/Card";
 import {
   Form,
@@ -8,7 +7,6 @@ import {
   type LoaderFunctionArgs,
 } from "react-router";
 import type { Route } from "./+types/productList";
-import { useEffect } from "react";
 
 export async function loader({ request, params }: LoaderFunctionArgs) {
   const url = new URL(request.url);
@@ -17,29 +15,36 @@ export async function loader({ request, params }: LoaderFunctionArgs) {
   const category = params.category!;
 
   const makeFilters = query.getAll("make");
+  const maxPrice = query.get("maxPrice");
 
   const filters = {
+    q: query.get("q"),
     used: query.get("used") === "true",
     new: query.get("new") === "true",
     makes: makeFilters.length > 0 ? makeFilters : undefined,
-    q: query.get("q"),
+    maxPrice: maxPrice ? parseFloat(maxPrice) : undefined,
+
   };
 
   const allMakes = await getAllMakes(category);
+  const { minPrice, maxPrice: maxAvailablePrice } = await getPriceRange(
+    category
+  );
   const data = await getProductByCategory(category, filters);
   return {
     products: data,
     allMakes,
     category,
     q,
+    minAvailablePrice: minPrice,
+    maxAvailablePrice,
   };
 }
 
 function productList({ loaderData }: Route.ComponentProps) {
-  const { products, allMakes, category, q } = loaderData;
+  const { products, allMakes, category, q, maxAvailablePrice } = loaderData;
   const submit = useSubmit();
   const [searchParams] = useSearchParams();
-
 
   const isMakeSelected = (make: string) => {
     return searchParams.getAll("make").includes(make);
@@ -59,16 +64,16 @@ function productList({ loaderData }: Route.ComponentProps) {
             <h2 className="text-lg font-bold text-gray-800 text-right">
               סינון
             </h2>
-            <div className="flex flex-col gap-4 p-4 border rounded-lg shadow-md bg-gray-50 mb-6">
-              <Form
-                method="get"
-                onChange={(event) => {
-                  const isFirstSearch = q === null;
-                  submit(event.currentTarget, {
-                    replace: !isFirstSearch,
-                  });
-                }}
-              >
+            <Form
+              method="get"
+              onChange={(event) => {
+                const isFirstSearch = q === null;
+                submit(event.currentTarget, {
+                  replace: !isFirstSearch,
+                });
+              }}
+            >
+              <div className="flex flex-col gap-4 p-4 border rounded-lg shadow-md bg-gray-50 mb-6">
                 <input
                   type="search"
                   placeholder="הקלד כאן לחיפוש מוצר"
@@ -76,9 +81,36 @@ function productList({ loaderData }: Route.ComponentProps) {
                   name="q"
                   defaultValue={q || ""}
                   className="border bg-amber-50 text-md"
+                />{" "}
+              </div>
+            </Form>
+
+            <Form method="get" onChange={(e) => submit(e.currentTarget)}>
+              <div className="flex flex-col gap-4 p-4 border rounded-lg shadow-md bg-gray-50 mb-6">
+                <h3 className="text-md font-semibold text-gray-700 border-b pb-2 text-right">
+                  מחיר
+                </h3>
+                <input
+                  type="range"
+                  name="maxPrice"
+                  min={loaderData.minAvailablePrice} 
+                  max={loaderData.maxAvailablePrice}
+                  step="20"
+                  defaultValue={
+                    searchParams.get("maxPrice") || loaderData.maxAvailablePrice
+                  }
+                  className="w-full"
                 />
-              </Form>
-            </div>
+                <div className="flex justify-between text-sm text-gray-600">
+                  <span>₪{loaderData.minAvailablePrice}</span>{" "}
+                  <span>
+                    ₪
+                    {searchParams.get("maxPrice") ||
+                      loaderData.maxAvailablePrice}
+                  </span>
+                </div>
+              </div>
+            </Form>
             <Form method="get" onChange={(e) => submit(e.currentTarget)}>
               <div className="flex flex-col gap-4 p-4 border rounded-lg shadow-md bg-gray-50 mb-6">
                 <h3 className="text-md font-semibold text-gray-700 border-b pb-2 text-right">
