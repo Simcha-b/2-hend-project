@@ -1,12 +1,20 @@
 import { getAllMakes, getPriceRange, getProductByCategory } from "../data/db";
 import Card from "../components/Card";
 import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "../components/ui/accordion";
+import {
   Form,
   useSearchParams,
   useSubmit,
   type LoaderFunctionArgs,
 } from "react-router";
 import type { Route } from "./+types/productList";
+import { Input } from "~/components/ui/input";
+import { SearchIcon } from "lucide-react";
 
 export async function loader({ request, params }: LoaderFunctionArgs) {
   const url = new URL(request.url);
@@ -23,7 +31,6 @@ export async function loader({ request, params }: LoaderFunctionArgs) {
     new: query.get("new") === "true",
     makes: makeFilters.length > 0 ? makeFilters : undefined,
     maxPrice: maxPrice ? parseFloat(maxPrice) : undefined,
-
   };
 
   const allMakes = await getAllMakes(category);
@@ -61,9 +68,7 @@ function productList({ loaderData }: Route.ComponentProps) {
       <div className="flex">
         {allMakes?.length > 0 && (
           <div className="w-64 flex flex-col gap-6 mr-6">
-            <h2 className="text-lg font-bold text-gray-800 text-right">
-              סינון
-            </h2>
+            
             <Form
               method="get"
               onChange={(event) => {
@@ -73,87 +78,103 @@ function productList({ loaderData }: Route.ComponentProps) {
                 });
               }}
             >
-              <div className="flex flex-col gap-4 p-4 border rounded-lg shadow-md bg-gray-50 mb-6">
-                <input
+                <Input
                   type="search"
-                  placeholder="הקלד כאן לחיפוש מוצר"
+                  placeholder= "הקלד כאן לחיפוש מוצר"
                   id="q"
                   name="q"
                   defaultValue={q || ""}
                   className="border bg-amber-50 text-md"
                 />{" "}
-              </div>
             </Form>
-
-            <Form method="get" onChange={(e) => submit(e.currentTarget)}>
-              <div className="flex flex-col gap-4 p-4 border rounded-lg shadow-md bg-gray-50 mb-6">
-                <h3 className="text-md font-semibold text-gray-700 border-b pb-2 text-right">
-                  מחיר
-                </h3>
-                <input
-                  type="range"
-                  name="maxPrice"
-                  min={loaderData.minAvailablePrice} 
-                  max={loaderData.maxAvailablePrice}
-                  step="20"
-                  defaultValue={
-                    searchParams.get("maxPrice") || loaderData.maxAvailablePrice
-                  }
-                  className="w-full"
-                />
-                <div className="flex justify-between text-sm text-gray-600">
-                  <span>₪{loaderData.minAvailablePrice}</span>{" "}
-                  <span>
-                    ₪
-                    {searchParams.get("maxPrice") ||
-                      loaderData.maxAvailablePrice}
-                  </span>
+            <div>
+            <Accordion type="single" collapsible>
+              <AccordionItem value="item-1">
+                <AccordionTrigger>מחיר</AccordionTrigger>
+                <AccordionContent>
+                <div className="flex flex-col gap-4 p-4 border rounded-lg shadow-md bg-gray-50">
+                  <Form method="get" onChange={(e) => submit(e.currentTarget)}>
+                    <input
+                      type="range"
+                      name="maxPrice"
+                      min={loaderData.minAvailablePrice}
+                      max={loaderData.maxAvailablePrice}
+                      step="20"
+                      defaultValue={
+                        searchParams.get("maxPrice") ||
+                        loaderData.maxAvailablePrice
+                      }
+                      className="w-full"
+                    />
+                    <div className="flex justify-between text-sm text-gray-600">
+                      <span>₪{loaderData.minAvailablePrice}</span>{" "}
+                      <span>
+                        ₪
+                        {searchParams.get("maxPrice") ||
+                          loaderData.maxAvailablePrice}
+                      </span>
+                    </div>
+                  </Form>
                 </div>
-              </div>
-            </Form>
+                </AccordionContent>
+              </AccordionItem>
+            </Accordion>
             <Form method="get" onChange={(e) => submit(e.currentTarget)}>
-              <div className="flex flex-col gap-4 p-4 border rounded-lg shadow-md bg-gray-50 mb-6">
-                <h3 className="text-md font-semibold text-gray-700 border-b pb-2 text-right">
-                  מצב
-                </h3>
-                <label className="flex items-center gap-2">
-                  <input
-                    type="checkbox"
-                    name="used"
-                    value="true"
-                    defaultChecked={searchParams.get("used") === "true"}
-                  />
-                  <span className="text-sm">משומש</span>
-                </label>
-                <label className="flex items-center gap-2">
-                  <input
-                    type="checkbox"
-                    name="new"
-                    value="true"
-                    defaultChecked={searchParams.get("new") === "true"}
-                  />
-                  <span className="text-sm">חדש</span>
-                </label>
-              </div>
-              <div className="flex flex-col gap-4 p-4 border rounded-lg shadow-md bg-gray-50">
-                <h3 className="text-md font-semibold text-gray-700 border-b pb-2 text-right">
-                  יצרן
-                </h3>
-                <div className="max-h-60 overflow-y-auto pr-2">
-                  {allMakes.map((make) => (
-                    <label key={make} className="flex items-center gap-2 mb-2">
-                      <input
-                        type="checkbox"
-                        name="make"
-                        value={make}
-                        defaultChecked={isMakeSelected(make)}
-                      />
-                      <span className="text-sm">{make}</span>
-                    </label>
-                  ))}
-                </div>
-              </div>
+              <Accordion type="single" collapsible>
+                <AccordionItem value="item-1">
+                  <AccordionTrigger>מצב מוצר</AccordionTrigger>
+                  <AccordionContent>
+                    <div className="flex flex-col gap-4 p-4 border rounded-lg shadow-md bg-gray-50 mb-6">
+                      <label className="flex items-center gap-2">
+                        <input
+                          type="checkbox"
+                          name="used"
+                          value="true"
+                          defaultChecked={searchParams.get("used") === "true"}
+                        />
+                        <span className="text-sm">משומש</span>
+                      </label>
+                      <label className="flex items-center gap-2">
+                        <input
+                          type="checkbox"
+                          name="new"
+                          value="true"
+                          defaultChecked={searchParams.get("new") === "true"}
+                        />
+                        <span className="text-sm">חדש</span>
+                      </label>
+                    </div>
+                  </AccordionContent>
+                </AccordionItem>
+              </Accordion>
+              <Accordion type="single" collapsible>
+                <AccordionItem value="item-1">
+                  <AccordionTrigger>יצרן </AccordionTrigger>
+                  <AccordionContent>
+                    <div className="flex flex-col gap-4 p-4 border rounded-lg shadow-md bg-gray-50">
+                     
+                      <div className="max-h-60 overflow-y-auto pr-2">
+                        {allMakes.map((make) => (
+                          <label
+                            key={make}
+                            className="flex items-center gap-2 mb-2"
+                          >
+                            <input
+                              type="checkbox"
+                              name="make"
+                              value={make}
+                              defaultChecked={isMakeSelected(make)}
+                            />
+                            <span className="text-sm">{make}</span>
+                          </label>
+                        ))}
+                      </div>
+                    </div>{" "}
+                  </AccordionContent>
+                </AccordionItem>
+              </Accordion>
             </Form>
+            </div>
           </div>
         )}
         <div className="grid md:grid-cols-4 gap-8 max-w-4xl mx-auto">

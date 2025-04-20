@@ -20,7 +20,6 @@ function isElectronics(product: Car | Electronics): product is Electronics {
 
 export default function productDetails() {
   const { product } = useLoaderData();
-  console.log(product);
   return (
     <div className="max-w-xl mx-auto bg-white shadow-md rounded-2xl p-6 space-y-4">
       <h2 className="text-2xl font-bold">{product.name}</h2>

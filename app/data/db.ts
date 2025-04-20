@@ -89,7 +89,6 @@ export async function getProductById(
   try {
     const data = await getProducts();
     const product = data.find((p) => p.id === productId);
-    console.log(product);
     return product;
   } catch (err) {
     console.error("Error reading product:", err);
