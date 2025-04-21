@@ -1,210 +1,217 @@
 [
-    {
-      "id": "1",
-      "name": "Toyota Corolla",
-      "category": "cars",
-      "price": 20000,
-      "description": "רכב שמור במצב מצוין, טסט לשנה.",
-      "condition": "Used",
-      "features": ["מערכת מולטימדיה", "מצלמת רוורס", "חיישני חניה"],
-      "sellerInfo": {
-        "name": "דני כהן",
-        "contact": "052-1234567",
-        "location": "תל אביב"
-      },
-      "make": "Toyota",
-      "model": "Corolla",
-      "year": 2018,
-      "Mileage": 50000,
-      "color": "White"
+  {
+    "id": "1",
+    "name": "Toyota Corolla",
+    "category": "cars",
+    "price": 20000,
+    "description": "רכב שמור במצב מצוין, טסט לשנה.",
+    "condition": "Used",
+    "features": ["מערכת מולטימדיה", "מצלמת רוורס", "חיישני חניה"],
+    "sellerInfo": {
+      "name": "דני כהן",
+      "contact": "052-1234567",
+      "location": "תל אביב"
     },
-    {
-      "id": "2",
-      "name": "Honda Civic",
-      "category": "cars",
-      "price": 18000,
-      "description": "רכב במצב טוב, יד שנייה.",
-      "condition": "Used",
-      "features": ["גג שמש", "מערכת שמע מובנית"],
-      "sellerInfo": {
-        "name": "אורן לוי",
-        "contact": "054-9876543",
-        "location": "חיפה"
-      },
-      "make": "Honda",
-      "model": "Civic",
-      "year": 2017,
-      "Mileage": 60000,
-      "color": "Silver"
+    "make": "Toyota",
+    "model": "Corolla",
+    "year": 2018,
+    "Mileage": 50000,
+    "color": "White",
+    "image": [
+      "https://cdn.impel.io/swipetospin-viewers/toyotanazareth/82822302/20250305073416.ZUWEFMW8/closeups/srp_bg_vb_led.jpg"
+    ]
+  },
+
+  {
+    "id": "2",
+    "name": "Honda Civic",
+    "category": "cars",
+    "price": 18000,
+    "description": "רכב במצב טוב, יד שנייה.",
+    "condition": "Used",
+    "features": ["גג שמש", "מערכת שמע מובנית"],
+    "sellerInfo": {
+      "name": "אורן לוי",
+      "contact": "054-9876543",
+      "location": "חיפה"
     },
-    {
-      "id": "3",
-      "name": "iPhone 14 Pro",
-      "category": "electronics",
-      "price": 3500,
-      "description": "טלפון חדש באריזה עם אחריות לשנה.",
-      "condition": "New",
-      "features": ["Face ID", "מצלמה 48MP", "טעינה אלחוטית"],
-      "sellerInfo": {
-        "name": "רוני ברק",
-        "contact": "050-2223334",
-        "location": "ירושלים"
-      },
-      "brand": "Apple",
-      "model": "iPhone 14 Pro",
-      "specifications": {
-        "Storage": "256GB",
-        "Color": "Deep Purple",
-        "Screen Size": "6.1 inch",
-        "Battery": "3200mAh"
-      }
+    "make": "Honda",
+    "model": "Civic",
+    "year": 2017,
+    "Mileage": 60000,
+    "color": "Silver",
+    "image": [
+      
+    ]
+  },
+  {
+    "id": "3",
+    "name": "iPhone 14 Pro",
+    "category": "electronics",
+    "price": 3500,
+    "description": "טלפון חדש באריזה עם אחריות לשנה.",
+    "condition": "New",
+    "features": ["Face ID", "מצלמה 48MP", "טעינה אלחוטית"],
+    "sellerInfo": {
+      "name": "רוני ברק",
+      "contact": "050-2223334",
+      "location": "ירושלים"
     },
-    {
-      "id": "4",
-      "name": "Samsung 65-inch QLED TV",
-      "category": "electronics",
-      "price": 5000,
-      "description": "טלוויזיה חכמה עם איכות תמונה מדהימה.",
-      "condition": "New",
-      "features": ["4K UHD", "HDR", "חיבור WiFi מובנה"],
-      "sellerInfo": {
-        "name": "מיכאל זיו",
-        "contact": "053-1122334",
-        "location": "באר שבע"
-      },
-      "brand": "Samsung",
-      "model": "QLED 65Q80B",
-      "specifications": {
-        "Resolution": "4K UHD",
-        "Panel Type": "QLED",
-        "Refresh Rate": "120Hz",
-        "Smart Features": "Tizen OS, אפליקציות מובנות"
-      }
-    },
-    {
-      "id": "5",
-      "name": "Mazda 3",
-      "category": "cars",
-      "price": 22000,
-      "description": "רכב שמור, יד ראשונה, מתחייב בבדיקה.",
-      "condition": "Used",
-      "features": ["מערכת שמע מקורית", "חיישני רוורס"],
-      "sellerInfo": {
-        "name": "יוסי מזרחי",
-        "contact": "052-3456789",
-        "location": "ראשון לציון"
-      },
-      "make": "Mazda",
-      "model": "3",
-      "year": 2020,
-      "Mileage": 40000,
-      "color": "Blue"
-    },
-    {
-      "id": "6",
-      "name": "Dell XPS 13",
-      "category": "electronics",
-      "price": 4800,
-      "description": "מחשב נייד דק וקל עם מסך מגע 4K.",
-      "condition": "New",
-      "features": ["מעבד i7", "זיכרון 16GB RAM", "כונן 512GB SSD"],
-      "sellerInfo": {
-        "name": "דנה כהן",
-        "contact": "054-5556667",
-        "location": "תל אביב"
-      },
-      "brand": "Dell",
-      "model": "XPS 13",
-      "specifications": {
-        "Processor": "Intel Core i7-1165G7",
-        "RAM": "16GB",
-        "Storage": "512GB SSD",
-        "Screen Size": "13.4 inch 4K Touch",
-        "Battery": "Up to 12 hours"
-      }
-    },
-    {
-      "id": "7",
-      "name": "BMW X5",
-      "category": "cars",
-      "price": 120000,
-      "description": "רכב יוקרה במצב חדש, יד ראשונה, אחריות יבואן.",
-      "condition": "New",
-      "features": ["גג פנורמי", "מערכת שמע הרמן קרדון", "מצלמות היקפיות"],
-      "sellerInfo": {
-        "name": "חיים לוי",
-        "contact": "053-7778889",
-        "location": "הרצליה"
-      },
-      "make": "BMW",
-      "model": "X5",
-      "year": 2023,
-      "Mileage": 10000,
-      "color": "Black"
-    },
-    {
-      "id": "8",
-      "name": "PlayStation 5",
-      "category": "electronics",
-      "price": 2300,
-      "description": "קונסולת משחקים חדשה באריזה, כולל שלט מקורי.",
-      "condition": "New",
-      "features": ["4K HDR", "DualSense Controller"],
-      "sellerInfo": {
-        "name": "תומר בר",
-        "contact": "050-1122334",
-        "location": "פתח תקווה"
-      },
-      "brand": "Sony",
-      "model": "PlayStation 5",
-      "specifications": {
-        "Processor": "AMD Ryzen Zen 2",
-        "RAM": "16GB GDDR6",
-        "Storage": "825GB SSD",
-        "Resolution": "4K UHD",
-        "Refresh Rate": "120Hz"
-      }
-    },
-    {
-      "id": "9",
-      "name": "Toyota RAV4 Hybrid",
-      "category": "cars",
-      "price": 135000,
-      "description": "רכב היברידי חסכוני בדלק, שמור כמו חדש.",
-      "condition": "Used",
-      "features": ["תצוגת מולטימדיה 10 אינץ'", "מערכת בטיחות מתקדמת"],
-      "sellerInfo": {
-        "name": "רוני אוחיון",
-        "contact": "052-9876543",
-        "location": "נתניה"
-      },
-      "make": "Toyota",
-      "model": "RAV4 Hybrid",
-      "year": 2022,
-      "Mileage": 25000,
-      "color": "Gray"
-    },
-    {
-      "id": "10",
-      "name": "MacBook Air M2",
-      "category": "electronics",
-      "price": 6200,
-      "description": "לפטופ חדש עם מעבד M2, בצבע זהב.",
-      "condition": "New",
-      "features": ["מעבד Apple M2", "זיכרון 8GB RAM", "כונן 512GB SSD"],
-      "sellerInfo": {
-        "name": "אביב נחום",
-        "contact": "054-3339999",
-        "location": "חולון"
-      },
-      "brand": "Apple",
-      "model": "MacBook Air M2",
-      "specifications": {
-        "Processor": "Apple M2",
-        "RAM": "8GB",
-        "Storage": "512GB SSD",
-        "Screen Size": "13.6 inch Retina",
-        "Battery": "Up to 18 hours"
-      }
+    "brand": "Apple",
+    "model": "iPhone 14 Pro",
+    "specifications": {
+      "Storage": "256GB",
+      "Color": "Deep Purple",
+      "Screen Size": "6.1 inch",
+      "Battery": "3200mAh"
     }
-  ]
+  },
+  {
+    "id": "4",
+    "name": "Samsung 65-inch QLED TV",
+    "category": "electronics",
+    "price": 5000,
+    "description": "טלוויזיה חכמה עם איכות תמונה מדהימה.",
+    "condition": "New",
+    "features": ["4K UHD", "HDR", "חיבור WiFi מובנה"],
+    "sellerInfo": {
+      "name": "מיכאל זיו",
+      "contact": "053-1122334",
+      "location": "באר שבע"
+    },
+    "brand": "Samsung",
+    "model": "QLED 65Q80B",
+    "specifications": {
+      "Resolution": "4K UHD",
+      "Panel Type": "QLED",
+      "Refresh Rate": "120Hz",
+      "Smart Features": "Tizen OS, אפליקציות מובנות"
+    }
+  },
+  {
+    "id": "5",
+    "name": "Mazda 3",
+    "category": "cars",
+    "price": 22000,
+    "description": "רכב שמור, יד ראשונה, מתחייב בבדיקה.",
+    "condition": "Used",
+    "features": ["מערכת שמע מקורית", "חיישני רוורס"],
+    "sellerInfo": {
+      "name": "יוסי מזרחי",
+      "contact": "052-3456789",
+      "location": "ראשון לציון"
+    },
+    "make": "Mazda",
+    "model": "3",
+    "year": 2020,
+    "Mileage": 40000,
+    "color": "Blue"
+  },
+  {
+    "id": "6",
+    "name": "Dell XPS 13",
+    "category": "electronics",
+    "price": 4800,
+    "description": "מחשב נייד דק וקל עם מסך מגע 4K.",
+    "condition": "New",
+    "features": ["מעבד i7", "זיכרון 16GB RAM", "כונן 512GB SSD"],
+    "sellerInfo": {
+      "name": "דנה כהן",
+      "contact": "054-5556667",
+      "location": "תל אביב"
+    },
+    "brand": "Dell",
+    "model": "XPS 13",
+    "specifications": {
+      "Processor": "Intel Core i7-1165G7",
+      "RAM": "16GB",
+      "Storage": "512GB SSD",
+      "Screen Size": "13.4 inch 4K Touch",
+      "Battery": "Up to 12 hours"
+    }
+  },
+  {
+    "id": "7",
+    "name": "BMW X5",
+    "category": "cars",
+    "price": 120000,
+    "description": "רכב יוקרה במצב חדש, יד ראשונה, אחריות יבואן.",
+    "condition": "New",
+    "features": ["גג פנורמי", "מערכת שמע הרמן קרדון", "מצלמות היקפיות"],
+    "sellerInfo": {
+      "name": "חיים לוי",
+      "contact": "053-7778889",
+      "location": "הרצליה"
+    },
+    "make": "BMW",
+    "model": "X5",
+    "year": 2023,
+    "Mileage": 10000,
+    "color": "Black"
+  },
+  {
+    "id": "8",
+    "name": "PlayStation 5",
+    "category": "electronics",
+    "price": 2300,
+    "description": "קונסולת משחקים חדשה באריזה, כולל שלט מקורי.",
+    "condition": "New",
+    "features": ["4K HDR", "DualSense Controller"],
+    "sellerInfo": {
+      "name": "תומר בר",
+      "contact": "050-1122334",
+      "location": "פתח תקווה"
+    },
+    "brand": "Sony",
+    "model": "PlayStation 5",
+    "specifications": {
+      "Processor": "AMD Ryzen Zen 2",
+      "RAM": "16GB GDDR6",
+      "Storage": "825GB SSD",
+      "Resolution": "4K UHD",
+      "Refresh Rate": "120Hz"
+    }
+  },
+  {
+    "id": "9",
+    "name": "Toyota RAV4 Hybrid",
+    "category": "cars",
+    "price": 135000,
+    "description": "רכב היברידי חסכוני בדלק, שמור כמו חדש.",
+    "condition": "Used",
+    "features": ["תצוגת מולטימדיה 10 אינץ'", "מערכת בטיחות מתקדמת"],
+    "sellerInfo": {
+      "name": "רוני אוחיון",
+      "contact": "052-9876543",
+      "location": "נתניה"
+    },
+    "make": "Toyota",
+    "model": "RAV4 Hybrid",
+    "year": 2022,
+    "Mileage": 25000,
+    "color": "Gray"
+  },
+  {
+    "id": "10",
+    "name": "MacBook Air M2",
+    "category": "electronics",
+    "price": 6200,
+    "description": "לפטופ חדש עם מעבד M2, בצבע זהב.",
+    "condition": "New",
+    "features": ["מעבד Apple M2", "זיכרון 8GB RAM", "כונן 512GB SSD"],
+    "sellerInfo": {
+      "name": "אביב נחום",
+      "contact": "054-3339999",
+      "location": "חולון"
+    },
+    "brand": "Apple",
+    "model": "MacBook Air M2",
+    "specifications": {
+      "Processor": "Apple M2",
+      "RAM": "8GB",
+      "Storage": "512GB SSD",
+      "Screen Size": "13.6 inch Retina",
+      "Battery": "Up to 18 hours"
+    }
+  }
+]

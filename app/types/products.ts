@@ -9,6 +9,7 @@ export interface Product {
   make?: string;
   brand?: string;
   model: string;
+  image?: string[];
   sellerInfo: {
     name: string;
     contact: string;
