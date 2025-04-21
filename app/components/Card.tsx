@@ -14,7 +14,7 @@ export default function Card({ product }: CardProps) {
         className="block"
       >
         {" "}
-        <div className="border border-amber-300 bg-amber-50 hover:bg-amber-100 transition rounded-2xl p-5 shadow-md hover:shadow-lg max-w-xs h-[350px]">
+        <div className="border hover:bg-amber-50 transition rounded-xl p-5 shadow-md hover:shadow-lg h-[350px]">
           <div className="relative w-full h-40 bg-gray-200 rounded-md overflow-hidden">
             <img
               src={Array.isArray(product.image) && product.image[0] ? product.image[0] : "/placeholder.png"}

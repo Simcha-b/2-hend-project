@@ -23,7 +23,9 @@ function isElectronics(product: Car | Electronics): product is Electronics {
 
 export default function productDetails({ loaderData }: Route.ComponentProps) {
   const { product } = loaderData;
-  const [imageToShow, setImageToShow] = useState(product.image[0]);
+  const [imageToShow, setImageToShow] = useState(
+    Array.isArray(product.image) ? product.image[0] : ""
+  );
 
   const navigate = useNavigate();
   return (
@@ -53,7 +55,9 @@ export default function productDetails({ loaderData }: Route.ComponentProps) {
           <div className="flex justify-between p-5">
             {product.image?.map((img) => (
               <div
-                className={img === imageToShow ? "border-3 border-black rounded-2xl"  : ""}
+                className={
+                  img === imageToShow ? "border-3 border-black rounded-2xl" : ""
+                }
               >
                 <img
                   src={img}

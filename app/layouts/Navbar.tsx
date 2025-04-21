@@ -4,11 +4,12 @@ import { Link, Outlet } from "react-router";
 function Navbar() {
   return (
     <>
-      <div  className="flex flex-col min-h-screen">
+      <div className="flex flex-col min-h-screen">
         <div className="sticky top-0 z-10 bg-white shadow-md">
           <div className="flex-1">
             <div className="flex items-center gap-10 shadow-md text-xl bold p-3 text-green-700">
               <div className="ml-auto text-center flex justify-center">
+                
                 <Link to={"/"}>דף הבית</Link>
               </div>
               <Link to={"/about"}>אודות</Link>
@@ -24,7 +25,7 @@ function Navbar() {
         <div>
           <Outlet />
         </div>
-        <footer className="text-center p-4 fixed bottom-0 w-full">©sbb-2025</footer>
+        <footer className="text-center bottom-0 p-2">©sbb-2025</footer>
       </div>
     </>
   );
