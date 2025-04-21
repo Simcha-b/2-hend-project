@@ -15,11 +15,8 @@ export default function Card({ product }: CardProps) {
       >
         {" "}
         <div className="border border-amber-300 bg-amber-50 hover:bg-amber-100 transition rounded-2xl p-5 shadow-md hover:shadow-lg max-w-xs h-[350px]">
-          {/* תמונה */}
           <div className="relative w-full h-40 bg-gray-200 rounded-md overflow-hidden">
-            {/* מקום לתמונה */}
             <img
-
               src={Array.isArray(product.image) && product.image[0] ? product.image[0] : "/placeholder.png"}
               alt={product.name}
               className="object-cover w-full h-full"
