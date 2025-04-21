@@ -20,13 +20,20 @@ function isCar(product: Car | Electronics): product is Car {
 function isElectronics(product: Car | Electronics): product is Electronics {
   return product.category === "electronics";
 }
+function handleAddToCart(id: string) {
+  const items = localStorage.getItem("itemsInCart");
+  let cart = items ? JSON.parse(items) : [];
+  if (!cart.includes(id)) {
+    cart.push(id);
+    localStorage.setItem("itemsInCart", JSON.stringify(cart));
+  }
+}
 
 export default function productDetails({ loaderData }: Route.ComponentProps) {
   const { product } = loaderData;
   const [imageToShow, setImageToShow] = useState(
     Array.isArray(product.image) ? product.image[0] : ""
   );
-
   const navigate = useNavigate();
   return (
     <>
@@ -70,7 +77,11 @@ export default function productDetails({ loaderData }: Route.ComponentProps) {
           </div>
         </div>
         <div className="relative w-2xl h-full bg-white shadow-md rounded-2xl p-6 mr-10">
-          <Button className=" absolute left-5 hover:cursor-pointer">
+          
+          <Button
+            className=" absolute left-5 hover:cursor-pointer"
+            onClick={() => handleAddToCart(product.id)}
+          >
             הוסף לסל ❤️
           </Button>
           <h2 className="text-2xl font-bold">{product.name}</h2>

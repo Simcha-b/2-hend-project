@@ -14,7 +14,7 @@ function Navbar() {
               </div>
               <Link to={"/about"}>אודות</Link>
               <Link to={"/contact"}>צור קשר</Link>
-              <Link to={"/basket"}>סל קניות 🛒</Link>
+              <Link to={"/cart"}>סל קניות 🛒</Link>
               <button className="bg-green-700 text-white text-sm rounded-2xl p-3 font-bold ring-2 shadow-2xl text-center hover:transform hover:scale-105">
                 <Link to={"/new"}>מכור פריט</Link>
               </button>

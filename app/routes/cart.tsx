@@ -1,12 +1,16 @@
 import React from "react";
+import type { ProductUnion } from "~/types/products";
 
-function Basket() {
+function Cart(item: ProductUnion) {
+
   return (
     <div className="text-4xl flex flex-col justify-center items-center">
       <h1> סל קניות</h1>
-      <div>...in progress</div>
+      <div>
+
+      </div>
     </div>
   );
 }
 
-export default Basket;
+export default Cart;
