@@ -163,7 +163,7 @@ function productList({ loaderData }: Route.ComponentProps) {
                               type="checkbox"
                               name="make"
                               value={make}
-                              defaultChecked={isMakeSelected(make)}
+                              defaultChecked={isMakeSelected(make||"")}
                             />
                             <span className="text-sm">{make}</span>
                           </label>

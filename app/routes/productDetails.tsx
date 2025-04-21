@@ -1,6 +1,5 @@
 import { getProductById } from "~/data/db";
 import type { Route } from "./+types/productDetails";
-import { useLoaderData } from "react-router";
 import type { Car, Electronics } from "~/types/products";
 
 export async function loader({ params }: Route.LoaderArgs) {
@@ -18,47 +17,56 @@ function isElectronics(product: Car | Electronics): product is Electronics {
   return product.category === "electronics";
 }
 
-export default function productDetails() {
-  const { product } = useLoaderData();
+export default function productDetails({ loaderData }: Route.ComponentProps) {
+  const { product } = loaderData;
   return (
-    <div className="max-w-xl mx-auto bg-white shadow-md rounded-2xl p-6 space-y-4">
-      <h2 className="text-2xl font-bold">{product.name}</h2>
-      <p className="text-gray-600">₪{product.price.toLocaleString()}</p>
-      
-      <p className="text-gray-700">{product.description}</p>
-
-      {isCar(product) && (
-        <div className="pt-4 border-t">
-          <h3 className="font-semibold text-lg">פרטי רכב</h3>
-          <p>יצרן: {product.make}</p>
-          <p>דגם: {product.model}</p>
-          <p>שנה: {product.year}</p>
-          <p>ק״מ: {product.Mileage.toLocaleString()} ק״מ</p>
-          <p>צבע: {product.color}</p>
+    <div
+      className="grid md:grid-cols-2 gap-5">
+        <div className="flex justify-center items-center bg-gray-100 rounded-lg ">
+          <img src={product?.image[0] || "/#"} alt="" className="w-md rounded-2xl" />
         </div>
-      )}
-
-      {isElectronics(product) && (
-        <div className="pt-4 border-t">
-          <h3 className="font-semibold text-lg">פרטי מוצר</h3>
-          <p>מותג: {product.brand}</p>
-          <p>דגם: {product.model}</p>
-          {product.specifications && (
-            <ul className="list-disc list-inside mt-2">
-              {Object.entries(product.specifications).map(([key, value]) => (
-                <li key={key}>
-                  <span className="font-medium">{key}:</span> {value as string}
-                </li>
-              ))}
-            </ul>
-          )}
+      <div className="w-xl h-xl bg-white shadow-md rounded-2xl p-6 m-4">
+        <h2 className="text-2xl font-bold">{product.name}</h2>
+        <div className="flex gap-4">
+        <p> <strong>יצרן:</strong> {product.make}</p>
         </div>
-      )}
-      <div className="border-t pt-4 text-sm text-gray-500">
-        <p>מצב: {product.condition === "new" ? "חדש" : "משומש"}</p>
-        <p>איש קשר: {product.sellerInfo.name}</p>
-        <p>מיקום: {product.sellerInfo.location}</p>
-        <p>טלפון: {product.sellerInfo.contact}</p>
+        <h3 >₪{product.price.toLocaleString()}</h3>
+
+        <p className="text-gray-700">{product.description}</p>
+
+        {isCar(product) && (
+          <div className="pt-4 border-t">
+            <h3 className="font-semibold text-lg">פרטי רכב</h3>
+            <p>דגם: {product.model}</p>
+            <p>שנה: {product.year}</p>
+            <p>ק״מ: {product.Mileage.toLocaleString()} ק״מ</p>
+            <p>צבע: {product.color}</p>
+          </div>
+        )}
+
+        {isElectronics(product) && (
+          <div className="pt-4 border-t">
+            <h3 className="font-semibold text-lg">פרטי מוצר</h3>
+            <p>מותג: {product.brand}</p>
+            <p>דגם: {product.model}</p>
+            {product.specifications && (
+              <ul className="list-disc list-inside mt-2">
+                {Object.entries(product.specifications).map(([key, value]) => (
+                  <li key={key}>
+                    <span className="font-medium">{key}:</span>{" "}
+                    {value as string}
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+        )}
+        <div className="border-t pt-4 text-sm text-gray-500">
+          <p>מצב: {product.condition === "new" ? "חדש" : "משומש"}</p>
+          <p>איש קשר: {product.sellerInfo.name}</p>
+          <p>מיקום: {product.sellerInfo.location}</p>
+          <p>טלפון: {product.sellerInfo.contact}</p>
+        </div>
       </div>
     </div>
   );

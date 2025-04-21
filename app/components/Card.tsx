@@ -19,7 +19,8 @@ export default function Card({ product }: CardProps) {
           <div className="relative w-full h-40 bg-gray-200 rounded-md overflow-hidden">
             {/* מקום לתמונה */}
             <img
-              src="/#"
+
+              src={Array.isArray(product.image) && product.image[0] ? product.image[0] : "/placeholder.png"}
               alt={product.name}
               className="object-cover w-full h-full"
             />

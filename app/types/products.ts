@@ -1,7 +1,7 @@
 export interface Product {
   id: string;
   name: string;
-  category: "car" | "electronics";
+  category: "cars" | "electronics";
   price: number;
   description: string;
   condition: string;

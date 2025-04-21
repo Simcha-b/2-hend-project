@@ -16,7 +16,7 @@
     "model": "Corolla",
     "year": 2018,
     "Mileage": 50000,
-    "color": "White",
+    "color": "לבן",
     "image": [
       "https://cdn.impel.io/swipetospin-viewers/toyotanazareth/82822302/20250305073416.ZUWEFMW8/closeups/srp_bg_vb_led.jpg"
     ]
@@ -39,9 +39,9 @@
     "model": "Civic",
     "year": 2017,
     "Mileage": 60000,
-    "color": "Silver",
+    "color": "כסף",
     "image": [
-      
+      "https://images.pexels.com/photos/16586238/pexels-photo-16586238/free-photo-of-tuned-honda-civic-on-street.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
     ]
   },
   {
@@ -61,10 +61,13 @@
     "model": "iPhone 14 Pro",
     "specifications": {
       "Storage": "256GB",
-      "Color": "Deep Purple",
+      "Color": "סגול",
       "Screen Size": "6.1 inch",
       "Battery": "3200mAh"
-    }
+    },
+    "image": [
+      "https://images.pexels.com/photos/18525574/pexels-photo-18525574/free-photo-of-unboxing-iphone-15-pro-max-box-in-natural-titanium-color-mention-zana_qaradaghy-on-instagram-while-use-this-photo-follow-on-instagram-zana_qaradaghy.jpeg?auto=compress&cs=tinysrgb&w=600"
+    ]
   },
   {
     "id": "4",
@@ -81,6 +84,9 @@
     },
     "brand": "Samsung",
     "model": "QLED 65Q80B",
+    "image": [
+      "https://images.pexels.com/photos/5211580/pexels-photo-5211580.jpeg?auto=compress&cs=tinysrgb&w=600"
+    ],
     "specifications": {
       "Resolution": "4K UHD",
       "Panel Type": "QLED",
@@ -105,7 +111,10 @@
     "model": "3",
     "year": 2020,
     "Mileage": 40000,
-    "color": "Blue"
+    "color": "Blue",
+    "image": [
+      "https://images.pexels.com/photos/16021636/pexels-photo-16021636/free-photo-of-mazda-3-on-street-in-town.jpeg?auto=compress&cs=tinysrgb&w=600"
+    ]
   },
   {
     "id": "6",
@@ -128,7 +137,10 @@
       "Storage": "512GB SSD",
       "Screen Size": "13.4 inch 4K Touch",
       "Battery": "Up to 12 hours"
-    }
+    },
+    "image": [
+      "https://images.pexels.com/photos/2861984/pexels-photo-2861984.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+    ]
   },
   {
     "id": "7",
@@ -147,7 +159,10 @@
     "model": "X5",
     "year": 2023,
     "Mileage": 10000,
-    "color": "Black"
+    "color": "שחור",
+    "image": [
+      "https://images.pexels.com/photos/7154532/pexels-photo-7154532.jpeg?auto=compress&cs=tinysrgb&w=600"
+    ]
   },
   {
     "id": "8",
@@ -170,7 +185,10 @@
       "Storage": "825GB SSD",
       "Resolution": "4K UHD",
       "Refresh Rate": "120Hz"
-    }
+    },
+    "image": [
+      "https://images.pexels.com/photos/4523031/pexels-photo-4523031.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+    ]
   },
   {
     "id": "9",
@@ -189,7 +207,10 @@
     "model": "RAV4 Hybrid",
     "year": 2022,
     "Mileage": 25000,
-    "color": "Gray"
+    "color": "ירוק",
+    "image": [
+      "https://images.pexels.com/photos/9615358/pexels-photo-9615358.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+    ]
   },
   {
     "id": "10",
@@ -212,6 +233,9 @@
       "Storage": "512GB SSD",
       "Screen Size": "13.6 inch Retina",
       "Battery": "Up to 18 hours"
-    }
+    },
+    "image": [
+      "https://images.pexels.com/photos/129208/pexels-photo-129208.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+    ]
   }
 ]
