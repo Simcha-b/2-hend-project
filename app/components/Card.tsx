@@ -9,34 +9,34 @@ interface CardProps {
 export default function Card({ product }: CardProps) {
   return (
     product && (
-      <Link
-        to={`./${product.id}`}
-        className="block"
-      >
+      <Link to={`./${product.id}`} className="block">
         {" "}
-        <div className="border hover:bg-amber-50 transition rounded-xl p-5 shadow-md hover:shadow-lg h-[350px]">
-          <div className="relative w-full h-40 bg-gray-200 rounded-md overflow-hidden">
+        <div className="border hover:bg-gray-100 transition rounded-sm shadow-md hover:shadow-lg">
+          <div className="relative w-full h-40 bg-gray-200 rounded-sm overflow-hidden">
             <img
-              src={Array.isArray(product.image) && product.image[0] ? product.image[0] : "/placeholder.png"}
+              src={
+                Array.isArray(product.image) && product.image[0]
+                  ? product.image[0]
+                  : "/placeholder.png"
+              }
               alt={product.name}
               className="object-cover w-full h-full"
             />
           </div>
-
-          <div className="mt-4">
+          <div className="mt-4 p-2">
             {/* שם המוצר */}
             <h2 className="text-xl font-semibold text-gray-800 truncate">
               {product.name}
             </h2>
 
             {/* מחיר */}
-            <span className="text-lg font-bold">
+            <span className="font-bold text-green-600">
               ₪{product.price.toLocaleString()}
             </span>
+            <p className="text-sm line-clamp-1">{product.description}</p>
 
             {/* מידע על המוכר */}
             <div className="mt-2 text-sm text-gray-600">
-              <p>{product.sellerInfo.name}</p>
               <p>{product.sellerInfo.location}</p>
             </div>
           </div>

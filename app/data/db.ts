@@ -1,3 +1,4 @@
+import { write, writeFile, writeFileSync } from "fs";
 import { type Product, type Car, type Electronics } from "../types/products";
 import { readFile } from "fs/promises";
 
@@ -11,6 +12,55 @@ export async function getProducts(): Promise<Car[] | Electronics[]> {
     throw err;
   }
 }
+export async function getCart(): Promise<string[]> {
+  try {
+    const data = await readFile("./app/data/cart.json", "utf8");
+    const cart = JSON.parse(data);
+    console.log("cart", cart);
+    return cart;
+  } catch (err) {
+    console.error("Error reading file:", err);
+    throw err;
+  }
+}
+
+export async function addToCart(id: string): Promise<string[]> {
+  try {
+    if (await isProductInCart(id)) throw new Error("Product already in cart");
+    const data = await readFile("./app/data/cart.json", "utf8");
+    let cart = JSON.parse(data);
+    cart.push(id);
+    writeFileSync("./app/data/cart.json", JSON.stringify(cart));
+    console.log(`add ${id} to cart!`);
+    return cart;
+  } catch (err) {
+    console.error("Error reading file:", err);
+    throw err;
+  }
+}
+
+export async function removeFromCart(id: string): Promise<string[]> {
+  try {
+    const data = await readFile("./app/data/cart.json", "utf8");
+    let cart = JSON.parse(data);
+    cart = cart.filter((i: string) => i !== id);
+    writeFileSync("./app/data/cart.json", JSON.stringify(cart));
+    return cart;
+  } catch (err) {
+    console.error("Error reading file:", err);
+    throw err;
+  }
+}
+export async function isProductInCart(id: string) {
+  const cart = await getCart();
+  console.log(cart.includes(id), id);
+  return cart.includes(id);
+}
+export async function getCartNumber() {
+  const cart = await getCart();
+  return cart.length;
+}
+
 export async function getAllMakes(category: string) {
   const products = await getProducts();
   const validMakes = products
@@ -89,7 +139,8 @@ export async function getProductById(
   try {
     const data = await getProducts();
     const product = data.find((p) => p.id === productId);
-    return product;
+    const inCart = await isProductInCart(productId);
+    return { product, inCart };
   } catch (err) {
     console.error("Error reading product:", err);
     throw err;

@@ -64,11 +64,11 @@ function productList({ loaderData }: Route.ComponentProps) {
 
   return (
     <>
-      <h1 className="text-center text-3xl p-5">{titleMap[category]}</h1>
+      <h1 className="text-2xl p-5 font-bold">{titleMap[category]}</h1>
       <div className="flex">
         {allMakes?.length > 0 && (
           <div className="w-64 flex flex-col gap-6 mr-6">
-            
+            {/* חיפוש */}
             <Form
               method="get"
               onChange={(event) => {
@@ -78,106 +78,125 @@ function productList({ loaderData }: Route.ComponentProps) {
                 });
               }}
             >
-                <Input
-                  type="search"
-                  placeholder= "הקלד כאן לחיפוש מוצר"
-                  id="q"
-                  name="q"
-                  defaultValue={q || ""}
-                  className="border bg-amber-50 text-md"
-                />{" "}
+              <Input
+                type="search"
+                placeholder="חיפוש..."
+                id="q"
+                name="q"
+                defaultValue={q || ""}
+                className="border text-md"
+              />{" "}
             </Form>
+            {/* פילטרים */}
             <div>
-            <Accordion type="single" collapsible>
-              <AccordionItem value="item-1">
-                <AccordionTrigger>מחיר</AccordionTrigger>
-                <AccordionContent>
-                <div className="flex flex-col gap-4 p-4 border rounded-lg shadow-md bg-gray-50">
-                  <Form method="get" onChange={(e) => submit(e.currentTarget)}>
-                    <input
-                      type="range"
-                      name="maxPrice"
-                      min={loaderData.minAvailablePrice}
-                      max={loaderData.maxAvailablePrice}
-                      step="20"
-                      defaultValue={
-                        searchParams.get("maxPrice") ||
-                        loaderData.maxAvailablePrice
-                      }
-                      className="w-full"
-                    />
-                    <div className="flex justify-between text-sm text-gray-600">
-                      <span>₪{loaderData.minAvailablePrice}</span>{" "}
-                      <span>
-                        ₪
-                        {searchParams.get("maxPrice") ||
-                          loaderData.maxAvailablePrice}
-                      </span>
-                    </div>
-                  </Form>
-                </div>
-                </AccordionContent>
-              </AccordionItem>
-            </Accordion>
-            <Form method="get" onChange={(e) => submit(e.currentTarget)}>
-              <Accordion type="single" collapsible>
-                <AccordionItem value="item-1">
-                  <AccordionTrigger>מצב מוצר</AccordionTrigger>
-                  <AccordionContent>
-                    <div className="flex flex-col gap-4 p-4 border rounded-lg shadow-md bg-gray-50 mb-6">
-                      <label className="flex items-center gap-2">
-                        <input
-                          type="checkbox"
-                          name="used"
-                          value="true"
-                          defaultChecked={searchParams.get("used") === "true"}
-                        />
-                        <span className="text-sm">משומש</span>
-                      </label>
-                      <label className="flex items-center gap-2">
-                        <input
-                          type="checkbox"
-                          name="new"
-                          value="true"
-                          defaultChecked={searchParams.get("new") === "true"}
-                        />
-                        <span className="text-sm">חדש</span>
-                      </label>
-                    </div>
-                  </AccordionContent>
-                </AccordionItem>
-              </Accordion>
-              <Accordion type="single" collapsible>
-                <AccordionItem value="item-1">
-                  <AccordionTrigger>יצרן </AccordionTrigger>
-                  <AccordionContent>
-                    <div className="flex flex-col gap-4 p-4 border rounded-lg shadow-md bg-gray-50">
-                     
-                      <div className="max-h-60 overflow-y-auto pr-2">
-                        {allMakes.map((make) => (
-                          <label
-                            key={make}
-                            className="flex items-center gap-2 mb-2"
-                          >
+              <div className="flex justify-between mb-5">
+                <h2 className="font-bold m-2">סינון</h2>
+                <Form method="get">
+                  <button className="hover:cursor-pointer hover:bg-green-500 hover:text-white p-2 text-md rounded-2xl">
+                    איפוס
+                  </button>
+                </Form>
+              </div>
+              <div className="border-b-1">
+                <Accordion type="single" collapsible>
+                  <AccordionItem value="item-1">
+                    <AccordionTrigger>מחיר</AccordionTrigger>
+                    <AccordionContent>
+                      <div className="flex flex-col ">
+                        <Form
+                          method="get"
+                          onChange={(e) => submit(e.currentTarget)}
+                        >
+                          <input
+                            type="range"
+                            name="maxPrice"
+                            min={loaderData.minAvailablePrice}
+                            max={loaderData.maxAvailablePrice}
+                            step="20"
+                            defaultValue={
+                              searchParams.get("maxPrice") ||
+                              loaderData.maxAvailablePrice
+                            }
+                            className="w-full"
+                          />
+                          <div className="flex justify-between text-sm text-gray-600">
+                            <span>₪{loaderData.minAvailablePrice}</span>{" "}
+                            <span>
+                              ₪
+                              {searchParams.get("maxPrice") ||
+                                loaderData.maxAvailablePrice}
+                            </span>
+                          </div>
+                        </Form>
+                      </div>
+                    </AccordionContent>
+                  </AccordionItem>
+                </Accordion>
+              </div>
+              <Form method="get" onChange={(e) => submit(e.currentTarget)}>
+                <div className="border-b-1">
+                  <Accordion type="single" collapsible>
+                    <AccordionItem value="item-1">
+                      <AccordionTrigger>מצב מוצר</AccordionTrigger>
+                      <AccordionContent>
+                        <div className="flex flex-col gap-4 p-4 ">
+                          <label className="flex items-center gap-2">
                             <input
                               type="checkbox"
-                              name="make"
-                              value={make}
-                              defaultChecked={isMakeSelected(make||"")}
+                              name="used"
+                              value="true"
+                              checked={searchParams.get("used") === "true"}
                             />
-                            <span className="text-sm">{make}</span>
+                            <span className="text-sm">משומש</span>
                           </label>
-                        ))}
-                      </div>
-                    </div>{" "}
-                  </AccordionContent>
-                </AccordionItem>
-              </Accordion>
-            </Form>
+                          <label className="flex items-center gap-2">
+                            <input
+                              type="checkbox"
+                              name="new"
+                              value="true"
+                              d
+                              checked={searchParams.get("new") === "true"}
+                            />
+                            <span className="text-sm">חדש</span>
+                          </label>
+                        </div>
+                      </AccordionContent>
+                    </AccordionItem>
+                  </Accordion>
+                </div>
+                <div className="border-b-1">
+                  <Accordion type="single" collapsible>
+                    <AccordionItem value="item-1">
+                      <AccordionTrigger>יצרן </AccordionTrigger>
+                      <AccordionContent>
+                        <div className="flex flex-col gap-4 p-4">
+                          <div className="max-h-60 overflow-y-auto pr-2">
+                            {allMakes.map((make) => (
+                              <label
+                                key={make}
+                                className="flex items-center gap-2 mb-2"
+                              >
+                                <input
+                                  type="checkbox"
+                                  name="make"
+                                  value={make}
+                                  checked={isMakeSelected(make || "")}
+                                />
+                                <span className="text-sm">{make}</span>
+                              </label>
+                            ))}
+                          </div>
+                        </div>{" "}
+                      </AccordionContent>
+                    </AccordionItem>
+                  </Accordion>
+                </div>
+              </Form>
             </div>
           </div>
         )}
-        <div className="grid md:grid-cols-4 gap-8 max-w-4xl mx-auto">
+        <div className="grid md:grid-cols-4 gap-5 max-w-4xl mx-auto">
+          {/* הצגת המוצרים */}
           {products?.map((product: any) => (
             <Card key={product.id} product={product} />
           ))}

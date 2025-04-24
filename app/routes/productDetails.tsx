@@ -1,18 +1,34 @@
-import { getProductById } from "~/data/db";
+import {
+  addToCart,
+  getProductById,
+  isProductInCart,
+  removeFromCart,
+} from "~/data/db";
 import type { Route } from "./+types/productDetails";
 import type { Car, Electronics } from "~/types/products";
 import { Button } from "~/components/ui/button";
-import { useNavigate } from "react-router";
-import { ArrowBigRight, ArrowRight } from "lucide-react";
+import { useFetcher, useNavigate } from "react-router";
+import { ArrowRight } from "lucide-react";
 import { useState } from "react";
 
 export async function loader({ params }: Route.LoaderArgs) {
-  const product = await getProductById(params.id!);
+  const { product, inCart } = await getProductById(params.id!);
   if (!product) {
     throw new Response("Not Found", { status: 404 });
   }
-  return { product };
+  return { product, inCart };
 }
+export async function action({ request }: Route.ActionArgs) {
+  const formData = await request.formData();
+  const productId = formData.get("productId") as string;
+  const inCart = await isProductInCart(productId);
+  if (inCart) {
+    await removeFromCart(productId);
+  } else {
+    await addToCart(productId);
+  }
+}
+
 function isCar(product: Car | Electronics): product is Car {
   return product.category === "cars";
 }
@@ -20,26 +36,22 @@ function isCar(product: Car | Electronics): product is Car {
 function isElectronics(product: Car | Electronics): product is Electronics {
   return product.category === "electronics";
 }
-function handleAddToCart(id: string) {
-  const items = localStorage.getItem("itemsInCart");
-  let cart = items ? JSON.parse(items) : [];
-  if (!cart.includes(id)) {
-    cart.push(id);
-    localStorage.setItem("itemsInCart", JSON.stringify(cart));
-  }
-}
 
 export default function productDetails({ loaderData }: Route.ComponentProps) {
-  const { product } = loaderData;
+  const { product, inCart } = loaderData;
+
+  const fetcher = useFetcher();
+
   const [imageToShow, setImageToShow] = useState(
     Array.isArray(product.image) ? product.image[0] : ""
   );
   const navigate = useNavigate();
+
   return (
     <>
       <div>
         <Button
-          className="mr-5 mt-5 hover:cursor-pointer"
+          className="mr-5 mt-5 mb-5 hover:cursor-pointer"
           onClick={() => {
             navigate(-1);
           }}
@@ -50,12 +62,12 @@ export default function productDetails({ loaderData }: Route.ComponentProps) {
         </Button>
       </div>
       <div className="flex">
-        <div>
-          <div className="flex justify-center items-center bg-gray-100 rounded-lg ">
+        <div className="m-5">
+          <div className="flex justify-center items-center ml-5">
             <img
               src={imageToShow}
               alt={product.name}
-              className="w-md rounded-2xl"
+              className="w-md  rounded-2xl "
             />
           </div>
 
@@ -77,13 +89,18 @@ export default function productDetails({ loaderData }: Route.ComponentProps) {
           </div>
         </div>
         <div className="relative w-2xl h-full bg-white shadow-md rounded-2xl p-6 mr-10">
-          
-          <Button
-            className=" absolute left-5 hover:cursor-pointer"
-            onClick={() => handleAddToCart(product.id)}
-          >
-            הוסף לסל ❤️
-          </Button>
+          <fetcher.Form method="post">
+            <input type="hidden" name="productId" value={product.id} />
+            <Button
+              type="submit"
+              className="absolute left-5 hover:cursor-pointer"
+              disabled={
+                fetcher.state == "submitting" || fetcher.state == "loading"
+              }
+            >
+              {inCart ? "הסר מהסל 🗑️" : "הוסף לסל ❤️"}
+            </Button>
+          </fetcher.Form>
           <h2 className="text-2xl font-bold">{product.name}</h2>
           <div className="flex gap-4">
             <p>
