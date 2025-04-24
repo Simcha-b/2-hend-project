@@ -240,5 +240,243 @@
     "image": [
       "https://images.pexels.com/photos/129208/pexels-photo-129208.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
     ]
+  },
+  {
+    "id": "11",
+    "name": "Hyundai Ioniq Hybrid",
+    "category": "cars",
+    "price": 95000,
+    "description": "רכב היברידי חסכוני מאוד, כולל מערכת בטיחות מתקדמת.",
+    "condition": "Used",
+    "features": ["מסך מולטימדיה", "בקרת שיוט", "מצלמת רוורס"],
+    "sellerInfo": {
+      "name": "גיא פרידמן",
+      "contact": "052-4455667",
+      "location": "רחובות"
+    },
+    "make": "Hyundai",
+    "model": "Ioniq",
+    "year": 2021,
+    "Mileage": 30000,
+    "color": "לבן פנינה",
+    "image": [
+      "https://images.pexels.com/photos/12353734/pexels-photo-12353734.jpeg?auto=compress&cs=tinysrgb&w=600"
+    ]
+  },
+  {
+    "id": "12",
+    "name": "iPad Pro 11-inch",
+    "category": "electronics",
+    "price": 4200,
+    "description": "אייפד חדש באריזה, כולל עט Apple Pencil.",
+    "condition": "New",
+    "features": ["Face ID", "120Hz ProMotion", "Apple Pencil 2"],
+    "sellerInfo": {
+      "name": "מיכל בר",
+      "contact": "053-2233445",
+      "location": "מודיעין"
+    },
+    "brand": "Apple",
+    "model": "iPad Pro 11",
+    "specifications": {
+      "Storage": "256GB",
+      "Color": "אפור חלל",
+      "Screen Size": "11 inch",
+      "Battery": "10 שעות"
+    },
+    "image": [
+      "https://images.pexels.com/photos/16738220/pexels-photo-16738220/free-photo-of-an-ipad-a-pen-and-a-pencil-on-a-green-table.jpeg?auto=compress&cs=tinysrgb&w=600"
+    ]
+  },
+  {
+    "id": "13",
+    "name": "Volkswagen Golf",
+    "category": "cars",
+    "price": 67000,
+    "description": "גולף במצב מצוין, יד שנייה, מטופלת במורשה.",
+    "condition": "Used",
+    "features": ["מערכת מולטימדיה", "חיישני חניה", "בקרת יציבות"],
+    "sellerInfo": {
+      "name": "איתי דהן",
+      "contact": "050-9988776",
+      "location": "כפר סבא"
+    },
+    "make": "Volkswagen",
+    "model": "Golf",
+    "year": 2019,
+    "Mileage": 58000,
+    "color": "אפור מטאלי",
+    "image": [
+      "https://images.pexels.com/photos/31723207/pexels-photo-31723207/free-photo-of-volkswagen-golf-r-on-country-road-in-erbil.jpeg?auto=compress&cs=tinysrgb&w=600"
+    ]
+  },
+  {
+    "id": "14",
+    "name": "LG 55-inch OLED TV",
+    "category": "electronics",
+    "price": 4600,
+    "description": "טלוויזיה OLED עם צבעים חיים ועמוקים במיוחד.",
+    "condition": "New",
+    "features": ["4K OLED", "HDR10+", "ThinQ AI"],
+    "sellerInfo": {
+      "name": "רועי שחר",
+      "contact": "055-6667788",
+      "location": "אילת"
+    },
+    "brand": "LG",
+    "model": "OLED55C1",
+    "specifications": {
+      "Resolution": "4K UHD",
+      "Panel Type": "OLED",
+      "Refresh Rate": "120Hz",
+      "Smart Features": "WebOS"
+    },
+    "image": [
+      "https://images.pexels.com/photos/1682519/pexels-photo-1682519.jpeg?auto=compress&cs=tinysrgb&w=600"
+    ]
+  },
+  {
+    "id": "15",
+    "name": "Canon EOS R10",
+    "category": "electronics",
+    "price": 3700,
+    "description": "מצלמה קומפקטית עם עדשה 18-150mm, חדשה באריזה.",
+    "condition": "New",
+    "features": ["24MP", "4K וידאו", "מסך מגע מפרקי"],
+    "sellerInfo": {
+      "name": "עדי ויינר",
+      "contact": "052-1233211",
+      "location": "רמת גן"
+    },
+    "brand": "Canon",
+    "model": "EOS R10",
+    "specifications": {
+      "Resolution": "24.2MP",
+      "Lens": "18-150mm",
+      "Screen": "3 inch LCD",
+      "Video": "4K"
+    },
+    "image": [
+      "https://images.pexels.com/photos/2873486/pexels-photo-2873486.jpeg?auto=compress&cs=tinysrgb&w=600"
+    ]
+  },
+  {
+    "id": "16",
+    "name": "Nissan Qashqai",
+    "category": "cars",
+    "price": 89000,
+    "description": "ג'יפון חסכוני, יד שנייה עם קילומטראז' נמוך.",
+    "condition": "Used",
+    "features": ["מערכת מולטימדיה", "מצלמת רוורס", "בלימה אוטונומית"],
+    "sellerInfo": {
+      "name": "שלומי דוידוב",
+      "contact": "054-9998887",
+      "location": "חדרה"
+    },
+    "make": "Nissan",
+    "model": "Qashqai",
+    "year": 2020,
+    "Mileage": 41000,
+    "color": "כסוף",
+    "image": [
+      "https://images.pexels.com/photos/23221411/pexels-photo-23221411/free-photo-of-cars-parked-next-to-a-house-in-turkey.jpeg?auto=compress&cs=tinysrgb&w=600"
+    ]
+  },
+  {
+    "id": "17",
+    "name": "Apple Watch Series 9",
+    "category": "electronics",
+    "price": 1600,
+    "description": "שעון חכם חדש, כולל רצועת ספורט נוספת.",
+    "condition": "New",
+    "features": ["מד דופק", "מעקב שינה", "תצוגת Always-On"],
+    "sellerInfo": {
+      "name": "רינת כהן",
+      "contact": "053-7771122",
+      "location": "בת ים"
+    },
+    "brand": "Apple",
+    "model": "Watch Series 9",
+    "specifications": {
+      "Size": "45mm",
+      "Battery": "עד 18 שעות",
+      "Connectivity": "WiFi + GPS"
+    },
+    "image": [
+      "https://images.pexels.com/photos/437037/pexels-photo-437037.jpeg?auto=compress&cs=tinysrgb&w=600"
+    ]
+  },
+  {
+    "id": "18",
+    "name": "Tesla Model 3",
+    "category": "cars",
+    "price": 175000,
+    "description": "רכב חשמלי חדש עם אוטונומיה גבוהה.",
+    "condition": "New",
+    "features": ["נהיגה אוטונומית", "מערכת מולטימדיה מתקדמת", "מצלמות היקפיות"],
+    "sellerInfo": {
+      "name": "נועם בלוך",
+      "contact": "050-7654321",
+      "location": "תל אביב"
+    },
+    "make": "Tesla",
+    "model": "Model 3",
+    "year": 2024,
+    "Mileage": 0,
+    "color": "אדום",
+    "image": [
+      "https://images.pexels.com/photos/10029873/pexels-photo-10029873.jpeg?auto=compress&cs=tinysrgb&w=600"
+    ]
+  },
+  {
+    "id": "19",
+    "name": "Samsung Galaxy S24",
+    "category": "electronics",
+    "price": 3900,
+    "description": "טלפון חדש מהקופסה, אחריות לשנה.",
+    "condition": "New",
+    "features": ["מצלמה 200MP", "טעינה מהירה", "מסך 120Hz"],
+    "sellerInfo": {
+      "name": "אביתר לביא",
+      "contact": "052-9988775",
+      "location": "כפר יונה"
+    },
+    "brand": "Samsung",
+    "model": "Galaxy S24",
+    "specifications": {
+      "Storage": "256GB",
+      "Color": "שחור",
+      "Screen Size": "6.8 inch",
+      "Battery": "5000mAh"
+    },
+    "image": [
+      "https://images.pexels.com/photos/15493878/pexels-photo-15493878/free-photo-of-hands-on-samsung-galaxy-s23-ultra-5g-green-color-mention-zana_qaradaghy-on-instagram-while-use-this-photo-follow-on-instagram-zana_qaradaghy.jpeg?auto=compress&cs=tinysrgb&w=600"
+    ]
+  },
+  {
+    "id": "20",
+    "name": "Asus ROG Zephyrus G14",
+    "category": "electronics",
+    "price": 7300,
+    "description": "לפטופ גיימינג חזק, כולל כרטיס גרפי RTX 4060.",
+    "condition": "New",
+    "features": ["AMD Ryzen 9", "16GB RAM", "RTX 4060"],
+    "sellerInfo": {
+      "name": "עומר חרובי",
+      "contact": "054-2233445",
+      "location": "רמת השרון"
+    },
+    "brand": "Asus",
+    "model": "ROG Zephyrus G14",
+    "specifications": {
+      "Processor": "Ryzen 9 7940HS",
+      "RAM": "16GB",
+      "Storage": "1TB SSD",
+      "Screen": "14 inch 165Hz",
+      "Battery": "Up to 10 hours"
+    },
+    "image": [
+      "https://images.pexels.com/photos/691810/pexels-photo-691810.jpeg?auto=compress&cs=tinysrgb&w=600"
+    ]
   }
 ]

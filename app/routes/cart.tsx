@@ -85,6 +85,7 @@ function Cart({ loaderData }: Route.ComponentProps) {
         </div>
       </div>
     </div>
+    
   );
 }
 

@@ -146,3 +146,14 @@ export async function getProductById(
     throw err;
   }
 }
+
+export async function addProduct(product: Product) {
+  try {
+    const data = await getProducts();
+    data.push(product);
+    writeFileSync("./app/data/products.json", JSON.stringify(data));
+  } catch (err) {
+    console.error("Error adding product:", err);
+    throw err;
+  }
+}
