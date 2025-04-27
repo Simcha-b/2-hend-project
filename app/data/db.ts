@@ -1,8 +1,8 @@
-import { write, writeFile, writeFileSync } from "fs";
+import { readFileSync, writeFileSync } from "fs";
 import { type Product, type Car, type Electronics } from "../types/products";
 import { readFile } from "fs/promises";
 
-export async function getProducts(): Promise<Car[] | Electronics[]> {
+export async function getProducts(): Promise<Product[]> {
   try {
     const data = await readFile("./app/data/products.json", "utf8");
     const products = JSON.parse(data);
@@ -14,9 +14,8 @@ export async function getProducts(): Promise<Car[] | Electronics[]> {
 }
 export async function getCart(): Promise<string[]> {
   try {
-    const data = await readFile("./app/data/cart.json", "utf8");
+    const data = readFileSync("./app/data/cart.json", "utf8");
     const cart = JSON.parse(data);
-    console.log("cart", cart);
     return cart;
   } catch (err) {
     console.error("Error reading file:", err);
@@ -27,8 +26,7 @@ export async function getCart(): Promise<string[]> {
 export async function addToCart(id: string): Promise<string[]> {
   try {
     if (await isProductInCart(id)) throw new Error("Product already in cart");
-    const data = await readFile("./app/data/cart.json", "utf8");
-    let cart = JSON.parse(data);
+    const cart = await getCart();
     cart.push(id);
     writeFileSync("./app/data/cart.json", JSON.stringify(cart));
     console.log(`add ${id} to cart!`);
@@ -41,8 +39,7 @@ export async function addToCart(id: string): Promise<string[]> {
 
 export async function removeFromCart(id: string): Promise<string[]> {
   try {
-    const data = await readFile("./app/data/cart.json", "utf8");
-    let cart = JSON.parse(data);
+    let cart = await getCart();
     cart = cart.filter((i: string) => i !== id);
     writeFileSync("./app/data/cart.json", JSON.stringify(cart));
     return cart;
@@ -51,6 +48,17 @@ export async function removeFromCart(id: string): Promise<string[]> {
     throw err;
   }
 }
+
+export async function removeAllFromCart() {
+  try {
+    writeFileSync("./app/data/cart.json", JSON.stringify([]));
+    return [];
+  } catch (err) {
+    console.error("Error reading file:", err);
+    throw err;
+  }
+}
+
 export async function isProductInCart(id: string) {
   const cart = await getCart();
   console.log(cart.includes(id), id);
@@ -119,7 +127,7 @@ export async function getProductByCategory(
     }
     if (filters?.maxPrice) {
       products = products.filter(
-        (product) => product.price <= filters.maxPrice
+        (product) => product.price <= filters.maxPrice!!
       );
     }
     if (filters?.q && filters.q.trim().length > 0) {
@@ -147,11 +155,14 @@ export async function getProductById(
   }
 }
 
-export async function addProduct(product: Product) {
+export async function addProduct(product: Car | Electronics) {
   try {
     const data = await getProducts();
+    product.id = data[data.length - 1].id + 1;
     data.push(product);
     writeFileSync("./app/data/products.json", JSON.stringify(data));
+    console.log("Product added:", product);
+    return product;
   } catch (err) {
     console.error("Error adding product:", err);
     throw err;

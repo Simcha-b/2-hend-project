@@ -1,16 +1,72 @@
 import { ArrowLeft, Upload } from "lucide-react";
+import type { P } from "node_modules/react-router/dist/development/route-data-BL8ToWby.mjs";
 import React from "react";
 import { Form, redirect, useNavigate } from "react-router";
 import { Button } from "~/components/ui/button";
+import { addProduct } from "~/data/db";
+import type { Product, Car, Electronics } from "~/types/products";
+import { productCreators } from "~/utils/productUtils";
 
 export async function action({ request }: any) {
   const formData = await request.formData();
   const data = Object.fromEntries(formData);
-  console.log(data);
-  return redirect(`${data.category}`);
+
+  const baseProduct: Product = {
+    id: Date.now().toString(),
+    category: data.category,
+    name: data.name,
+    price: Number(data.price),
+    description: data.productDescription,
+    condition: data.condition,
+    model: data.model,
+    features: data.features.split(",") || [""],
+    sellerInfo: {
+      name: data.sellerName || "",
+      email: data.sellerContact || "",
+      location: data.sellerLocation || "",
+      contact: data.sellerContact || "",
+    },
+    addedAt: new Date().toLocaleString(),
+  };
+
+  if (data.category === "cars") {
+    const car: Car = {
+      ...baseProduct,
+      make: data.make,
+      year: Number(data.year),
+      Mileage: Number(data.mileage),
+      color: data.color,
+    };
+    await addProduct(car);
+  }
+
+  if (data.category === "electronics") {
+    const electronics: Electronics = {
+      ...baseProduct,
+      brand: data.brand,
+      specifications: parseSpecs(data.specifications),
+    };
+    await addProduct(electronics);
+  }
+
+  return redirect(`/${data.category}`);
 }
+
+function parseSpecs(specString: string) {
+  const specs = {};
+  const entries = specString.split(",");
+  entries.forEach((entry) => {
+    const [key, value] = entry.split(":").map((s) => s.trim());
+    if (key && value) {
+      specs[key] = value;
+    }
+  });
+  return specs;
+}
+
 function New() {
   const navigate = useNavigate();
+  const [category, setCategory] = React.useState("cars");
   const inputClass =
     "border mt-2 mt-2 p-2 rounded focus:outline-none focus:ring-2 focus:ring-green-500";
   return (
@@ -31,12 +87,17 @@ function New() {
         </p>
         <Form
           method="post"
-          className="flex flex-col gap-4 w-[90%] border rounded-2xl p-6"
+          className="flex flex-col gap-8 w-[90%] border rounded-2xl p-6 "
         >
-          <h1 className="text-1xl font-bold mb-2">פרטי המוצר</h1>
           <label className="flex flex-col">
             קטגוריה*
-            <select name="category" id="" className={inputClass} required>
+            <select
+              name="category"
+              id=""
+              className={inputClass}
+              required
+              onChange={(e) => setCategory(e.target.value)}
+            >
               <option value="cars">מכוניות</option>
               <option value="electronics">מוצרי אלקטרוניקה</option>
             </select>
@@ -45,7 +106,7 @@ function New() {
             שם המוצר*
             <input
               type="text"
-              name="productName"
+              name="name"
               className={inputClass}
               placeholder="לדוגמא: טויוטה קאמרי 2019 או מקבוק פרו 16"
               required
@@ -70,9 +131,8 @@ function New() {
               <input
                 type="checkbox"
                 id="new"
-                name="productCondition"
+                name="condition"
                 className={inputClass}
-                required
               />
               <label htmlFor="used">משומש</label>
               <input
@@ -80,7 +140,6 @@ function New() {
                 id="used"
                 name="productCondition"
                 className={inputClass}
-                required
               />
             </div>
           </label>
@@ -94,57 +153,156 @@ function New() {
               required
             ></textarea>
           </label>
-
+          {category === "cars" ? (
+            <div className="bg-gray-100 rounded-2xl p-4">
+              <h1 className="text-1xl font-bold mb-2">פרטי רכב</h1>
+              <div className="grid grid-cols-2 grid-rows-2 gap-4">
+                <label htmlFor="make" className="flex flex-col">
+                  *יצרן
+                  <input
+                    type="text"
+                    name="make"
+                    className={inputClass}
+                    placeholder="לדוגמא: טויטה"
+                    required
+                  />
+                </label>
+                <label htmlFor="make" className="flex flex-col">
+                  *דגם
+                  <input
+                    type="text"
+                    name="model"
+                    className={inputClass}
+                    placeholder="לדוגמא: קאמרי "
+                    required
+                  />
+                </label>{" "}
+                <label htmlFor="make" className="flex flex-col">
+                  *שנה
+                  <input
+                    type="number"
+                    name="year"
+                    className={inputClass}
+                    placeholder="לדוגמא: 2019"
+                    required
+                  />
+                </label>
+                <label htmlFor="make" className="flex flex-col">
+                  *קילומטראז'
+                  <input
+                    type="number"
+                    name="make"
+                    className={inputClass}
+                    placeholder="לדוגמא: טויטה"
+                    required
+                  />
+                </label>
+                <label htmlFor="color" className="flex flex-col">
+                  *צבע
+                  <input
+                    type="text"
+                    name="color"
+                    className={inputClass}
+                    placeholder="לדוגמא: כחול"
+                    required
+                  />
+                </label>
+              </div>
+              <label htmlFor="make" className="flex flex-col">
+                *תכונות
+                <textarea
+                  name="features"
+                  placeholder="רשום תכונות מרכזיות מופרדות בפסיקים (לדוגמא: מושבי עור, גג נפתח, מערכת ניווט)"
+                  className={inputClass}
+                  rows={4}
+                  required
+                ></textarea>
+              </label>
+            </div>
+          ) : (
+            <div className="bg-gray-100 rounded-2xl p-4">
+              <h1 className="text-1xl font-bold mb-2">פרטי מוצרי אלקטרוניקה</h1>
+              <div className="grid grid-cols-2 gap-4">
+                <label htmlFor="make" className="flex flex-col">
+                  *יצרן
+                  <input
+                    type="text"
+                    name="make"
+                    className={inputClass}
+                    placeholder="לדוגמא: אפל"
+                    required
+                  />
+                </label>
+                <label htmlFor="model" className="flex flex-col">
+                  *דגם
+                  <input
+                    type="text"
+                    name="model"
+                    className={inputClass}
+                    placeholder="לדוגמא: מקבוק פרו"
+                    required
+                  />
+                </label>
+              </div>
+              <label className="flex flex-col">
+                *תכונות
+                <textarea
+                  name="features"
+                  placeholder="רשום מפרט מרכזי (לדוגמה: מעבד: M1 Pro, זיכרון: 16GB, אחסון: 512GB)"
+                  className={inputClass}
+                  rows={4}
+                  required
+                ></textarea>
+              </label>
+            </div>
+          )}
           <label className="flex flex-col items-center justify-center gap-2 border-2 border-dashed border-gray-400 rounded-2xl p-6 cursor-pointer text-gray-600 hover:border-green-500 hover:bg-green-50 transition-all w-full max-w-sm">
             <Upload className="w-6 h-6 text-green-500" />
-            <span>הוסף תמונות</span>
+            <span>הוסף תמונות (מקסימום 5)*</span>
             <input
               type="file"
               name="productImage"
-              accept="image/*"
+              // accept="image/*"
               className="hidden"
             />
           </label>
           <div>
             <h1 className="text-1xl font-bold mb-2">פרטי המוכר</h1>
-            <div className="flex">
+            <div className="grid grid-cols-2 grid-rows-2 gap-4">
               <label className="flex flex-col mr-2">
                 שם מלא*
                 <input
                   type="text"
-                  name="firstName"
+                  name="sellerName"
                   className={inputClass}
-                  placeholder="שם פרטי"
+                  placeholder="שם"
                   required
+                />
+              </label>
+              <label className="flex flex-col mr-2">
+                כתובת אימייל*
+                <input
+                  type="email"
+                  name="sellerEmail"
+                  className={inputClass}
+                  placeholder="אימייל"
                 />
               </label>
               <label className="flex flex-col mr-2">
                 טלפון*
                 <input
                   type="tel"
-                  name="phone"
+                  name="sellerContact"
                   className={inputClass}
                   placeholder="מספר טלפון"
                   required
                 />
               </label>
-            </div>
-            <div className="flex gap-5 mt-2">
               <label className="flex flex-col">
-                כתובת*
+                מיקום*
                 <input
                   type="text"
-                  name="address"
-                  className={inputClass}
-                  placeholder="כתובת"
-                  required
-                />
-              </label>
-              <label htmlFor="" className="flex flex-col">
-                עיר*
-                <input
-                  type="text"
-                  name="city"
+                  name="sellerLocation"
                   className={inputClass}
                   placeholder="עיר"
                   required
@@ -152,12 +310,11 @@ function New() {
               </label>
             </div>
           </div>
-
           <button
             type="submit"
-            className="bg-green-500 text-white p-2 rounded hover:bg-green-600"
+            className="bg-green-500 text-white p-2 rounded hover:bg-green-600 hover:scale-105 transition-all hover:cursor-pointer"
           >
-            הוסף מוצר
+            פרסם מודעה למכירה
           </button>
         </Form>
       </div>

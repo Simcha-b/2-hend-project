@@ -8,7 +8,7 @@ import type { Route } from "./+types/productDetails";
 import type { Car, Electronics } from "~/types/products";
 import { Button } from "~/components/ui/button";
 import { useFetcher, useNavigate } from "react-router";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Check } from "lucide-react";
 import { useState } from "react";
 
 export async function loader({ params }: Route.LoaderArgs) {
@@ -101,57 +101,81 @@ export default function productDetails({ loaderData }: Route.ComponentProps) {
               {inCart ? "הסר מהסל 🗑️" : "הוסף לסל ❤️"}
             </Button>
           </fetcher.Form>
-          <h2 className="text-2xl font-bold">{product.name}</h2>
-          <div className="flex gap-4">
-            <p>
-              {" "}
-              <strong>מותג:</strong> {product.make}
-            </p>
-            {isCar(product) && (
+          <div className="flex flex-col gap-4">
+            <h2 className="text-2xl font-bold m-">{product.name}</h2>
+            <div className="flex gap-4">
+              <span className="text-[12px] bg-gray-200 rounded-2xl p-1">
+                {product.condition == "new" ? "חדש" : "משומש"}
+              </span>
               <p>
-                <strong>שנה:</strong> {product.year}
+                {" "}
+                <strong>מותג:</strong>{" "}
+                {isCar(product) ? product.brand : product.brand}
               </p>
-            )}
-          </div>
-          <h3 className="text-green-900 text-2xl font-bold">
-            ₪{product.price.toLocaleString()}
-          </h3>
-
-          <p className="text-gray-700">{product.description}</p>
-
-          {isCar(product) && (
-            <div className="pt-4 border-t">
-              <h3 className="font-semibold text-lg">פרטי רכב</h3>
-              <p>דגם: {product.model}</p>
-              <p>ק״מ: {product.Mileage.toLocaleString()} ק״מ</p>
-              <p>צבע: {product.color}</p>
-            </div>
-          )}
-
-          {isElectronics(product) && (
-            <div className="pt-4 border-t">
-              <h3 className="font-semibold text-lg">פרטי מוצר</h3>
-              <p>מותג: {product.brand}</p>
-              <p>דגם: {product.model}</p>
-              {product.specifications && (
-                <ul className="list-disc list-inside mt-2">
-                  {Object.entries(product.specifications).map(
-                    ([key, value]) => (
-                      <li key={key}>
-                        <span className="font-medium">{key}:</span>{" "}
-                        {value as string}
-                      </li>
-                    )
-                  )}
-                </ul>
+              {isCar(product) && (
+                <p>
+                  <strong>שנה:</strong> {product.year}
+                </p>
               )}
             </div>
-          )}
-          <div className="border-t pt-4 text-sm text-gray-500">
-            <p>מצב: {product.condition === "new" ? "חדש" : "משומש"}</p>
-            <p>איש קשר: {product.sellerInfo.name}</p>
-            <p>מיקום: {product.sellerInfo.location}</p>
-            <p>טלפון: {product.sellerInfo.contact}</p>
+            <h3 className="text-green-900 text-2xl font-bold">
+              ₪{product.price}
+            </h3>
+
+            <p className="text-gray-700">{product.description}</p>
+
+            {isCar(product) && (
+              <div className="pt-4 border-t">
+                <h3 className="font-semibold text-lg">פרטי רכב</h3>
+                <p>דגם: {product.model}</p>
+                <p>ק״מ: {product.Mileage} ק״מ</p>
+                <p>צבע: {product.color}</p>
+              </div>
+            )}
+            {isElectronics(product) && (
+              <div className="pt-4 border-t">
+                <h3 className="font-semibold text-lg">מפרט טכני</h3>
+                <p className="m-2">דגם: {product.model}</p>
+                {product.specifications && (
+                  <table className="table-auto border border-gray-900 w-full mt-2">
+                    <tbody>
+                      {Object.entries(product.specifications).map(
+                        ([key, value]) => (
+                          <tr key={key} className="border-b  border-gray-900">
+                            <td className="px-4 py-2 font-medium border bg-gray-200 border-gray-900">
+                              {key}:
+                            </td>
+                            <td className="px-4 py-2">{value as string}</td>
+                          </tr>
+                        )
+                      )}
+                    </tbody>
+                  </table>
+                )}
+              </div>
+            )}
+            <div>
+              <h2 className="font-semibold text-lg">תכונות</h2>
+              <div className="grid grid-cols-2 grid-rows-2 gap-4 mt-2">
+                {product.features.map((feature) => (
+                  <div className="flex gap-2">
+                    <Check />
+                    <div key={feature}>{feature}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div className="border-t pt-4">
+              <h2 className="font-semibold text-lg">פרטי המוכר</h2>
+              <div className="text-sm text-gray-500">
+                <p>{product.sellerInfo.name}</p>
+                <p>{product.sellerInfo.location}</p>
+                <p>{product.sellerInfo.contact}</p>
+              </div>
+              <button className=" hover:bg-green-700 hover:text-white hover:cursor-pointer font-bold py-2 px-4 rounded mt-4 w-full">
+                יצירת קשר עם המוכר
+              </button>
+            </div>
           </div>
         </div>
       </div>

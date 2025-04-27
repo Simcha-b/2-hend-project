@@ -4,9 +4,7 @@ export default function Home() {
   return (
     <div className="mt-9">
       <div className="mt-10 mb-10">
-        <h1 className="text-center text-3xl text-[##0d0d0d]">
-          ברוכים הבאים לאתר הקניות החדשני ביותר
-        </h1>
+        <h1 className="text-center text-5xl text-[##0d0d0d] font-bold font-sans">Drive & Dveice</h1>
         <h4 className="text-center">
           מצאו עסקאות מדהימות על רכבים ומוצרי אלקטרוניקה משומשים, או מכרו את
           הפריטים שלכם לקהילת הקונים שלנו.

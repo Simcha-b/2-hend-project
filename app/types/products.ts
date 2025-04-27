@@ -6,22 +6,24 @@ export interface Product {
   description: string;
   condition: string;
   features?: string[];
-  make?: string;
-  brand?: string;
   model: string;
   image?: string[];
   sellerInfo: {
     name: string;
-    contact: string;
+    email: string;
     location: string;
+    contact: string;
   };
+  addedAt: string;
 }
 export interface Car extends Product {
+  make: string;
   year: number;
   Mileage: number;
   color: string;
 }
 export interface Electronics extends Product {
   specifications?: Record<string, string>;
+  brand: string;
 }
 export type ProductUnion = Car | Electronics;

@@ -31,13 +31,13 @@ export default function Card({ product }: CardProps) {
 
             {/* מחיר */}
             <span className="font-bold text-green-600">
-              ₪{product.price.toLocaleString()}
+              ₪{product.price}
             </span>
             <p className="text-sm line-clamp-1">{product.description}</p>
 
             {/* מידע על המוכר */}
             <div className="mt-2 text-sm text-gray-600">
-              <p>{product.sellerInfo.location}</p>
+              {/* <p>{product.sellerInfo.location}</p> */}
             </div>
           </div>
         </div>
