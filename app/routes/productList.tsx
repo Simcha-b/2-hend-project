@@ -1,4 +1,9 @@
-import { getAllMakes, getPriceRange, getProductByCategory } from "../data/db";
+import {
+  getAllMakes,
+  getCarsYears,
+  getPriceRange,
+  getProductByCategory,
+} from "../data/db";
 import Card from "../components/Card";
 import {
   Accordion,
@@ -31,9 +36,12 @@ export async function loader({ request, params }: LoaderFunctionArgs) {
     new: query.get("new") === "true",
     makes: makeFilters.length > 0 ? makeFilters : undefined,
     maxPrice: maxPrice ? parseFloat(maxPrice) : undefined,
+    fromYear: category === "cars" ? query.get("fromYear") : undefined,
+    toYear: category === "cars" ? query.get("toYear") : undefined,
   };
 
   const allMakes = await getAllMakes(category);
+  const allYears = category === "cars" ? await getCarsYears() : [];
   const { minPrice, maxPrice: maxAvailablePrice } = await getPriceRange(
     category
   );
@@ -41,6 +49,7 @@ export async function loader({ request, params }: LoaderFunctionArgs) {
   return {
     products: data,
     allMakes,
+    allYears,
     category,
     q,
     minAvailablePrice: minPrice,
@@ -49,13 +58,15 @@ export async function loader({ request, params }: LoaderFunctionArgs) {
 }
 
 function productList({ loaderData }: Route.ComponentProps) {
-  const { products, allMakes, category, q, maxAvailablePrice } = loaderData;
+  const { products, allMakes, allYears, category, q, maxAvailablePrice } =
+    loaderData;
   const submit = useSubmit();
   const [searchParams] = useSearchParams();
 
   const isMakeSelected = (make: string) => {
     return searchParams.getAll("make").includes(make);
   };
+  
 
   const titleMap: Record<string, string> = {
     cars: "מכוניות יד שניה",
@@ -185,6 +196,53 @@ function productList({ loaderData }: Route.ComponentProps) {
                     </AccordionItem>
                   </Accordion>
                 </div>
+                {category === "cars" && allYears.length > 0 && (
+                  <Accordion type="single" collapsible>
+                    <AccordionItem value="item-1">
+                      <AccordionTrigger>שנת ייצור</AccordionTrigger>
+                      <AccordionContent>
+                        <div className="flex justify-between gap-4 p-4 border">
+                          <div className="flex flex-col gap-4 max-h-60">
+                            <label htmlFor="">משנה:</label>
+                            <select
+                              name="fromYear"
+                              id=""
+                              className="w-full border border-gray-300 rounded-md p-4 text-sm focus:ring-2 focus:ring-green-500 focus:outline-none"
+                            >
+                              {allYears.map((year) => (
+                                <option
+                                  key={year}
+                                  value={year}
+                                  className="text-sm"
+                                >
+                                  {year}
+                                </option>
+                              ))}
+                            </select>
+                          </div>
+                          <div className="flex flex-col gap-4">
+                            <label htmlFor="">עד שנה:</label>
+                            <select
+                              name="toYear"
+                              id=""
+                              className="w-full  border border-gray-300 rounded-md p-4 text-sm focus:ring-2 focus:ring-green-500 focus:outline-none"
+                            >
+                              {allYears.map((year) => (
+                                <option
+                                  key={year}
+                                  value={year}
+                                  className="text-sm"
+                                >
+                                  {year}
+                                </option>
+                              ))}
+                            </select>
+                          </div>
+                        </div>
+                      </AccordionContent>
+                    </AccordionItem>
+                  </Accordion>
+                )}
               </Form>
             </div>
           </div>

@@ -1,20 +1,142 @@
 import { readFileSync, writeFileSync } from "fs";
 import { type Product, type Car, type Electronics } from "../types/products";
 import { readFile } from "fs/promises";
+import { BellElectric } from "lucide-react";
 
+/**---------------Products--------------- */
 export async function getProducts(): Promise<Product[]> {
   try {
     const data = await readFile("./app/data/products.json", "utf8");
     let products = JSON.parse(data);
-    products = products.sort((a, b) => {
-      Number(a.id) < Number(b.id);
-    });
     return products;
   } catch (err) {
     console.error("Error reading file:", err);
     throw err;
   }
 }
+
+export async function getProductByCategory(
+  category: string,
+  filters: {
+    used?: boolean;
+    new?: boolean;
+    makes?: string[];
+    maxPrice?: string | null;
+    fromYear?: string | null;
+    toYear?: number | null;
+    q?: string | null;
+  } = {}
+): Promise<Car[] | Electronics[]> {
+  try {
+    const data = await getProducts();
+    let products = data.filter((product) => product.category === category);
+    if (filters) {
+      products = products.filter((product) => {
+        if (filters.used && product.condition !== "Used") return false;
+        if (filters.new && product.condition !== "New") return false;
+        if (filters.makes && filters.makes.length > 0) {
+          return filters.makes.includes(
+            category === "cars" ? product.make : product.brand
+          );
+        }
+        return true;
+      });
+    }
+    if (filters?.maxPrice) {
+      products = products.filter(
+        (product) => product.price <= filters.maxPrice!!
+      );
+    }
+    if (filters?.fromYear && filters?.toYear) {
+      console.log("===============>"  , filters.fromYear, filters.toYear);
+      products = products.filter(
+        (product) =>
+          product.year >= Number(filters.fromYear) &&
+          product.year <= Number(filters.toYear)
+      );
+    }
+    if (filters?.q && filters.q.trim().length > 0) {
+      const query = filters.q.toLowerCase();
+      products = products.filter((p) => p.name.toLowerCase().includes(query));
+    }
+    return products;
+  } catch (err) {
+    console.error("Error reading products", err);
+    throw err;
+  }
+}
+
+export async function getProductById(
+  productId: string
+): Promise<Product | undefined> {
+  try {
+    const data = await getProducts();
+    const product = data.find((p) => p.id === productId);
+    const inCart = await isProductInCart(productId);
+    return { product, inCart };
+  } catch (err) {
+    console.error("Error reading product:", err);
+    throw err;
+  }
+}
+
+export async function addProduct(product: Car | Electronics) {
+  try {
+    const data = await getProducts();
+    product.id = data[data.length - 1].id + 1;
+    data.push(product);
+    writeFileSync("./app/data/products.json", JSON.stringify(data));
+    console.log("Product added:", product);
+    return product;
+  } catch (err) {
+    console.error("Error adding product:", err);
+    throw err;
+  }
+}
+
+/**------------------filters--------------------- */
+
+export async function getAllMakes(category: string) {
+  const products = await getProducts();
+  const validMakes = products
+    .map((product) => (category === "cars" ? product.make : product.brand))
+    .filter((make) => make !== undefined && make !== null && make !== "");
+  const allMakes = Array.from(new Set(validMakes));
+
+  allMakes.sort();
+
+  return allMakes;
+}
+export async function getPriceRange(
+  category: string
+): Promise<{ minPrice: number; maxPrice: number }> {
+  try {
+    const products = await getProducts();
+    const filteredProducts = products.filter(
+      (product) => product.category === category
+    );
+
+    const prices = filteredProducts.map((product) => product.price);
+    const minPrice = Math.min(...prices);
+    const maxPrice = Math.max(...prices);
+
+    return { minPrice, maxPrice };
+  } catch (err) {
+    console.error("Error calculating price range:", err);
+    throw err;
+  }
+}
+
+export async function getCarsYears() {
+  const cars = await getProductByCategory("cars", {});
+  let carsYears = cars.map((p) => p.year);
+  const allYears = Array.from(new Set(carsYears));
+  allYears.sort();
+  console.log(allYears);
+  return allYears;
+}
+
+/**----------------cart----------------------------- */
 export async function getCart(): Promise<string[]> {
   try {
     const data = readFileSync("./app/data/cart.json", "utf8");
@@ -70,104 +192,4 @@ export async function isProductInCart(id: string) {
 export async function getCartNumber() {
   const cart = await getCart();
   return cart.length;
-}
-
-export async function getAllMakes(category: string) {
-  const products = await getProducts();
-  const validMakes = products
-    .map((product) => (category === "cars" ? product.make : product.brand))
-    .filter((make) => make !== undefined && make !== null && make !== "");
-  const allMakes = Array.from(new Set(validMakes));
-
-  allMakes.sort();
-
-  return allMakes;
-}
-export async function getPriceRange(
-  category: string
-): Promise<{ minPrice: number; maxPrice: number }> {
-  try {
-    const products = await getProducts();
-    const filteredProducts = products.filter(
-      (product) => product.category === category
-    );
-
-    const prices = filteredProducts.map((product) => product.price);
-    const minPrice = Math.min(...prices);
-    const maxPrice = Math.max(...prices);
-
-    return { minPrice, maxPrice };
-  } catch (err) {
-    console.error("Error calculating price range:", err);
-    throw err;
-  }
-}
-
-export async function getProductByCategory(
-  category: string,
-  filters: {
-    used: boolean;
-    new: boolean;
-    makes?: string[];
-    maxPrice?: number | null;
-    q: string | null;
-  }
-): Promise<Product[]> {
-  try {
-    const data = await getProducts();
-    let products = data.filter((product) => product.category === category);
-    if (filters) {
-      products = products.filter((product) => {
-        if (filters.used && product.condition !== "Used") return false;
-        if (filters.new && product.condition !== "New") return false;
-        if (filters.makes && filters.makes.length > 0) {
-          return filters.makes.includes(
-            category === "cars" ? product.make : product.brand
-          );
-        }
-        return true;
-      });
-    }
-    if (filters?.maxPrice) {
-      products = products.filter(
-        (product) => product.price <= filters.maxPrice!!
-      );
-    }
-    if (filters?.q && filters.q.trim().length > 0) {
-      const query = filters.q.toLowerCase();
-      products = products.filter((p) => p.name.toLowerCase().includes(query));
-    }
-    return products;
-  } catch (err) {
-    console.error("Error reading products", err);
-    throw err;
-  }
-}
-
-export async function getProductById(
-  productId: string
-): Promise<Product | undefined> {
-  try {
-    const data = await getProducts();
-    const product = data.find((p) => p.id === productId);
-    const inCart = await isProductInCart(productId);
-    return { product, inCart };
-  } catch (err) {
-    console.error("Error reading product:", err);
-    throw err;
-  }
-}
-
-export async function addProduct(product: Car | Electronics) {
-  try {
-    const data = await getProducts();
-    product.id = data[data.length - 1].id + 1;
-    data.push(product);
-    writeFileSync("./app/data/products.json", JSON.stringify(data));
-    console.log("Product added:", product);
-    return product;
-  } catch (err) {
-    console.error("Error adding product:", err);
-    throw err;
-  }
 }
