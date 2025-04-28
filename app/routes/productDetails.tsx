@@ -137,11 +137,24 @@ export default function productDetails({ loaderData }: Route.ComponentProps) {
 
             {isCar(product) && (
               <div className="pt-4 pb-4 border-t border-b">
-                <h3 className="font-semibold text-lg">פרטי רכב</h3>
-                <p>דגם: {product.model}</p>
-                <p>קילומטראז': {product.Mileage.toLocaleString()} ק״מ</p>
-                <p>צבע: {product.color}</p>
-              </div>
+              <h3 className="font-semibold text-lg mb-4">פרטי רכב</h3>
+              <table className="table-auto w-full border-collapse border border-gray-300">
+                <tbody>
+                  <tr className="border-b">
+                    <td className="px-4 py-2 font-medium bg-gray-100 border border-gray-300">דגם:</td>
+                    <td className="px-4 py-2">{product.model}</td>
+                  </tr>
+                  <tr className="border-b">
+                    <td className="px-4 py-2 font-medium bg-gray-100 border border-gray-300">קילומטראז':</td>
+                    <td className="px-4 py-2">{product.Mileage.toLocaleString()} ק״מ</td>
+                  </tr>
+                  <tr>
+                    <td className="px-4 py-2 font-medium bg-gray-100 border border-gray-300">צבע:</td>
+                    <td className="px-4 py-2">{product.color}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
             )}
             {isElectronics(product) && (
               <div className="pt-4 border-t">

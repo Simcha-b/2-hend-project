@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import type { ProductUnion } from "~/types/products";
 import type { Route } from "./+types/cart";
 import {
@@ -7,8 +7,9 @@ import {
   removeAllFromCart,
   removeFromCart,
 } from "~/data/db";
-import { ShoppingBag, ShoppingCart, Trash2Icon } from "lucide-react";
-import { Form, Link, useSubmit } from "react-router";
+import { ArrowRight, ShoppingBag, ShoppingCart, Trash2Icon } from "lucide-react";
+import { Form, Link, useNavigate, useSubmit } from "react-router";
+import { Button } from "~/components/ui/button";
 
 export async function loader() {
   const items = await getCart();
@@ -42,9 +43,24 @@ export async function action({ request }: Route.ActionArgs) {
 
 function Cart({ loaderData }: Route.ComponentProps) {
   const submit = useSubmit();
+  const navigate = useNavigate();
+  const [open, setOpen] = useState(false);
   const { products, totalPrice } = loaderData;
   return (
     <>
+    <div>
+        <Button
+          variant="ghost"
+          className="mr-5 mt-5 hover:cursor-pointer"
+          onClick={() => {
+            navigate(-1);
+          }}
+        >
+          {" "}
+          <ArrowRight />
+          חזור
+        </Button>
+      </div>
       {products.length === 0 ? (
         <>
           <div className="flex flex-col items-center justify-center m-10 gap-5">
@@ -58,27 +74,27 @@ function Cart({ loaderData }: Route.ComponentProps) {
           </div>
         </>
       ) : (
-        <div className="flex flex-col items-center justify-center m-10">
+        <div className="flex flex-col mx-10 my-1">
           <h1 className="text-3xl mb-8 font-bold">סל הקניות שלך</h1>
           <div className="min-w-full min-h-[50vh] flex justify-center">
             <div className="min-w-full flex justify-center gap-5">
               {/* עגלה */}
-              <div className="w-2/3 border border-black rounded-2xl p-4 flex flex-col gap-5">
+              <div className="w-2/3 p-4 flex flex-col gap-5">
                 {products.map((p) => (
-                  <div className="flex w-full max-w-5xl min-h-20 bg-white rounded-xl shadow-md p-4 gap-4 text-right">
+                  <div className="flex w-full max-w-5xl h-35 bg-white rounded-xl shadow-md gap-4 text-right">
                     {/* תמונה */}
                     <div className="w-1/4 bg-gray-100 rounded-lg flex items-center justify-center">
                       <img
                         src={p.image[0]}
-                        className="w-full h-full p-2 object-contain"
+                        className="w-full h-full object-cover rounded-r-2xl"
                       />
                     </div>
                     {/* תוכן */}
-                    <div className="flex justify-between w-3/4">
+                    <div className="flex justify-between w-3/4 p-4">
                       {/* תיאור המוצר */}
                       <div className="flex flex-col justify-between">
                         <div>
-                          <h3 className="text-lg font-bold">{p?.name}</h3>
+                          <Link to={`/product/${p?.id}`} className="text-lg font-bold hover:cursor-pointer hover:text-green-600">{p?.name}</Link> <br />
                           <p className="text-sm text-gray-500">
                             {p?.make || p?.brand} • {p?.model}
                           </p>
@@ -130,6 +146,10 @@ function Cart({ loaderData }: Route.ComponentProps) {
                   <button
                     type="button"
                     className="mt-4 bg-green-500 text-white py-2 px-4 rounded text-center hover:cursor-pointer hover:bg-green-600"
+                    onClick={() => {
+                      setOpen(true);
+                      console.log("open");
+                    }}
                   >
                     המשך לתשלום
                   </button>
@@ -139,7 +159,37 @@ function Cart({ loaderData }: Route.ComponentProps) {
           </div>
         </div>
       )}
+      <Modal open={open} setOpen={setOpen} />;
     </>
+  );
+}
+
+export function Modal({
+  open,
+  setOpen,
+  message,
+}: {
+  open: boolean;
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  message: string;
+}) {
+  return (
+    open && (
+      <div className="fixed inset-0 flex items-center justify-center z-50">
+        <div className="fixed inset-0 bg-gray-900 opacity-50 z-40"></div>
+
+        <div className="bg-white rounded-lg p-8 max-w-xs md:max-w-lg w-full z-50">
+          <h2 className="text-2xl font-bold mb-4">הודעה</h2>
+          <p className="mb-4">אופס... האתר להדגמה בלבד...</p>
+          <button
+            className="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600 hover:cursor-pointer mt-4"
+            onClick={() => setOpen(false)}
+          >
+            סגור
+          </button>
+        </div>
+      </div>
+    )
   );
 }
 
