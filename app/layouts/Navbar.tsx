@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, Outlet, useLoaderData } from "react-router";
+import { Link, Outlet } from "react-router";
 import { getCartNumber } from "~/data/db";
 import type { Route } from "./+types/Navbar";
 import { House, Info, Phone, ShoppingCart } from "lucide-react";
@@ -8,8 +8,8 @@ export async function loader() {
   const cartNumber = await getCartNumber();
   return { cartNumber };
 }
-function Navbar(loaderData: Route.LoaderArgs) {
-  const { cartNumber } = useLoaderData() as { cartNumber: number };
+function Navbar({ loaderData }: Route.ComponentProps) {
+  const { cartNumber } = loaderData;
   return (
     <>
       <div className="flex flex-col min-h-screen">
@@ -65,7 +65,9 @@ function Navbar(loaderData: Route.LoaderArgs) {
         <div>
           <Outlet />
         </div>
-        <footer className="text-center bottom-0 p-2 mt-auto">©sbb-2025</footer>
+        <footer className="text-center bottom-0 p-2 mt-auto">
+          Build by ©sbb-2025
+        </footer>
       </div>
     </>
   );

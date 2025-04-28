@@ -1,12 +1,7 @@
 import { readFileSync, writeFileSync } from "fs";
-import {
-  type Product,
-  type Car,
-  type Electronics,
-  type filters,
-} from "../types/products";
+import { type Product, type Car, type Electronics } from "../types/products";
+import type { filters } from "../types/filters";
 import { readFile } from "fs/promises";
-import { BellElectric } from "lucide-react";
 
 /**---------------Products--------------- */
 export async function getProducts(): Promise<Product[]> {
@@ -38,26 +33,25 @@ export async function getProductByCategory(
         }
         return true;
       });
+      if (filters?.maxPrice) {
+        products = products.filter(
+          (product) => Number(product.price) <= Number(filters.maxPrice!!)
+        );
+      }
+      if (filters?.fromYear && filters?.toYear) {
+        products = products.filter(
+          (product) =>
+            product.year >= Number(filters.fromYear) &&
+            product.year <= Number(filters.toYear)
+        );
+      }
+      if (filters?.q && filters.q.trim().length > 0) {
+        const query = filters.q.toLowerCase();
+        products = products.filter((p) => p.name.toLowerCase().includes(query));
+      }
     }
-    if (filters?.maxPrice) {
-      products = products.filter(
-        (product) => Number(product.price) <= Number(filters.maxPrice!!)
-      );
-    }
-    if (filters?.fromYear && filters?.toYear) {
-      console.log("===============>", filters.fromYear, filters.toYear);
-      products = products.filter(
-        (product) =>
-          product.year >= Number(filters.fromYear) &&
-          product.year <= Number(filters.toYear)
-      );
-    }
-    if (filters?.q && filters.q.trim().length > 0) {
-      const query = filters.q.toLowerCase();
-      products = products.filter((p) => p.name.toLowerCase().includes(query));
-    }
-
-    return products.sort((a, b) => Number(b.id) - Number(a.id));
+    products.sort((a, b) => Number(b.id) - Number(a.id));
+    return products;
   } catch (err) {
     console.error("Error reading products", err);
     throw err;
@@ -66,7 +60,7 @@ export async function getProductByCategory(
 
 export async function getProductById(
   productId: string
-): Promise<Product | undefined> {
+): Promise<{ product: Product | undefined; inCart: boolean } | undefined> {
   try {
     const data = await getProducts();
     const product = data.find((p) => p.id === productId);

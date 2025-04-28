@@ -7,7 +7,7 @@ import {
   removeAllFromCart,
   removeFromCart,
 } from "~/data/db";
-import { ArrowRight, ShoppingBag, ShoppingCart, Trash2Icon } from "lucide-react";
+import { ArrowRight, CreditCard, ShoppingBag, ShoppingCart, Trash2Icon } from "lucide-react";
 import { Form, Link, useNavigate, useSubmit } from "react-router";
 import { Button } from "~/components/ui/button";
 
@@ -134,24 +134,25 @@ function Cart({ loaderData }: Route.ComponentProps) {
                 </div>
               </div>
               {/* סיכום הזמנה */}
-              <div className="w-1/3 border border-black rounded-2xl p-4">
+              <div className="w-1/3 border rounded-2xl p-4">
                 <h1 className="text-center font-bold text-2xl underline">
                   סיכום הזמנה
                 </h1>
-                <div className="flex justify-between mt-5 border-b-2 border-t-2 border-black">
+                <div className="flex justify-between mt-5 border-b-2 border-t-2">
                   <div>סכום לתשלום:</div>
                   <div>₪{totalPrice.toLocaleString()}</div>
                 </div>
                 <div className="flex flex-col items-center">
                   <button
                     type="button"
-                    className="mt-4 bg-green-500 text-white py-2 px-4 rounded text-center hover:cursor-pointer hover:bg-green-600"
+                    className="flex gap-2 mt-4 bg-green-600 text-white py-2 px-4 rounded-2xl text-center hover:cursor-pointer hover:bg-green-700"
                     onClick={() => {
                       setOpen(true);
                       console.log("open");
                     }}
                   >
-                    המשך לתשלום
+                    <CreditCard/>
+                    <span>המשך לתשלום</span>
                   </button>
                 </div>
               </div>

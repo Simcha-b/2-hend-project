@@ -26,7 +26,7 @@ export async function action({ request }: any) {
       contact: data.sellerContact || "",
     },
     addedAt: new Date().toLocaleString(),
-    image: images as string[], // מערך תמונות
+    image: images as string[],
   };
 
   if (data.category === "cars") {
@@ -85,6 +85,8 @@ function New() {
 
     const images = await Promise.all(base64Promises);
     setImagesBase64(images);
+    console.log(imagesBase64);
+
   };
   const inputClass =
     "border mt-2 mt-2 p-2 rounded focus:outline-none focus:ring-2 focus:ring-green-500";
@@ -283,7 +285,7 @@ function New() {
               type="file"
               name="images"
               accept="image/*"
-              multiple
+              // multiple
               className="hidden"
               onChange={handleImageChange}
             />
