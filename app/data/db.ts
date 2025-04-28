@@ -1,5 +1,10 @@
 import { readFileSync, writeFileSync } from "fs";
-import { type Product, type Car, type Electronics } from "../types/products";
+import {
+  type Product,
+  type Car,
+  type Electronics,
+  type filters,
+} from "../types/products";
 import { readFile } from "fs/promises";
 import { BellElectric } from "lucide-react";
 
@@ -17,15 +22,7 @@ export async function getProducts(): Promise<Product[]> {
 
 export async function getProductByCategory(
   category: string,
-  filters: {
-    used?: boolean;
-    new?: boolean;
-    makes?: string[];
-    maxPrice?: string | null;
-    fromYear?: string | null;
-    toYear?: number | null;
-    q?: string | null;
-  } = {}
+  filters: filters = {}
 ): Promise<Car[] | Electronics[]> {
   try {
     const data = await getProducts();
@@ -44,11 +41,11 @@ export async function getProductByCategory(
     }
     if (filters?.maxPrice) {
       products = products.filter(
-        (product) => product.price <= filters.maxPrice!!
+        (product) => Number(product.price) <= Number(filters.maxPrice!!)
       );
     }
     if (filters?.fromYear && filters?.toYear) {
-      console.log("===============>"  , filters.fromYear, filters.toYear);
+      console.log("===============>", filters.fromYear, filters.toYear);
       products = products.filter(
         (product) =>
           product.year >= Number(filters.fromYear) &&

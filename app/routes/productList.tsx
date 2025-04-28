@@ -66,7 +66,6 @@ function productList({ loaderData }: Route.ComponentProps) {
   const isMakeSelected = (make: string) => {
     return searchParams.getAll("make").includes(make);
   };
-  
 
   const titleMap: Record<string, string> = {
     cars: "מכוניות יד שניה",
@@ -225,6 +224,7 @@ function productList({ loaderData }: Route.ComponentProps) {
                             <select
                               name="toYear"
                               id=""
+                              defaultValue={allYears[allYears.length - 1]}
                               className="w-full  border border-gray-300 rounded-md p-4 text-sm focus:ring-2 focus:ring-green-500 focus:outline-none"
                             >
                               {allYears.map((year) => (
