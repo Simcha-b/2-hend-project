@@ -477,5 +477,47 @@
     "image": [
       "https://images.pexels.com/photos/691810/pexels-photo-691810.jpeg?auto=compress&cs=tinysrgb&w=600"
     ]
+  },
+  {
+    "id": "201",
+    "category": "cars",
+    "name": "מרצדס",
+    "price": 99998,
+    "description": "רכב יוקרתי ביותר",
+    "condition": "on",
+    "model": "SLS",
+    "features": ["מושבי עור לבן", " פינוקים"],
+    "sellerInfo": {
+      "name": "בני",
+      "email": "0544444",
+      "location": "ליד המעיין",
+      "contact": "0544444"
+    },
+    "addedAt": "27.4.2025, 17:25:38",
+    "make": "Mercedes",
+    "year": 2025,
+    "Mileage": null,
+    "color": "כתום"
+  },
+  {
+    "id": "2011",
+    "category": "cars",
+    "name": "טיוטה קורולה",
+    "price": 350000,
+    "description": "חחחח",
+    "condition": "on",
+    "model": "קאמרי",
+    "features": ["חדשששש", " ועוד"],
+    "sellerInfo": {
+      "name": "בני",
+      "email": "0544444",
+      "location": "ליד המעיין",
+      "contact": "0544444"
+    },
+    "addedAt": "27.4.2025, 18:44:56",
+    "make": "טויטה",
+    "year": 2024,
+    "Mileage": 120000,
+    "color": "ברונזה"
   }
 ]

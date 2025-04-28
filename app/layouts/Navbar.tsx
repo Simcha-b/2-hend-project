@@ -47,12 +47,17 @@ function Navbar(loaderData: Route.LoaderArgs) {
                     </span>
                   )}
 
-                  <span className="text-xl"><ShoppingCart/></span>
+                  <span className="text-xl">
+                    <ShoppingCart />
+                  </span>
                 </div>
               </Link>
-              <button className="bg-green-700 text-white text-sm rounded-2xl p-3 font-bold ring-2 shadow-2xl text-center hover:transform hover:scale-105">
-                <Link to={"/new"}>מכור פריט</Link>
-              </button>
+              <Link
+                to={"/new"}
+                className="bg-green-700 text-white text-sm rounded-2xl p-3 font-bold ring-2 shadow-2xl text-center hover:cursor-pointer hover:transform hover:scale-105"
+              >
+                מכור פריט
+              </Link>
             </div>
           </div>
         </div>

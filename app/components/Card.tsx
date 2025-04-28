@@ -11,7 +11,7 @@ export default function Card({ product }: CardProps) {
     product && (
       <Link to={`./${product.id}`} className="block">
         {" "}
-        <div className="border hover:bg-gray-100 transition rounded-sm shadow-md hover:shadow-lg">
+        <div className="border hover:bg-gray-100 transition rounded-sm shadow-md hover:shadow-lg hover:-translate-y-1.5 duration-300">
           <div className="relative w-full h-40 bg-gray-200 rounded-sm overflow-hidden">
             <img
               src={
@@ -30,14 +30,17 @@ export default function Card({ product }: CardProps) {
             </h2>
 
             {/* מחיר */}
-            <span className="font-bold text-green-600">
-              ₪{product.price}
-            </span>
+            <span className="font-bold text-green-600">₪{product.price.toLocaleString()}</span>
             <p className="text-sm line-clamp-1">{product.description}</p>
 
             {/* מידע על המוכר */}
             <div className="mt-2 text-sm text-gray-600">
-              {/* <p>{product.sellerInfo.location}</p> */}
+              <div className="flex justify-between mt-4">
+                  <p className= "text-[12px] bg-amber-100 rounded-full p-y-1 px-2">
+                    {product.condition === "Used" ? "משומש" : "חדש"}
+                  </p>
+                <p>{product.sellerInfo.location}</p>
+              </div>
             </div>
           </div>
         </div>

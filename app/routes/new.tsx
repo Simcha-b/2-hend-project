@@ -1,11 +1,9 @@
 import { ArrowLeft, Upload } from "lucide-react";
-import type { P } from "node_modules/react-router/dist/development/route-data-BL8ToWby.mjs";
 import React from "react";
 import { Form, redirect, useNavigate } from "react-router";
 import { Button } from "~/components/ui/button";
 import { addProduct } from "~/data/db";
 import type { Product, Car, Electronics } from "~/types/products";
-import { productCreators } from "~/utils/productUtils";
 
 export async function action({ request }: any) {
   const formData = await request.formData();
@@ -15,7 +13,7 @@ export async function action({ request }: any) {
     id: Date.now().toString(),
     category: data.category,
     name: data.name,
-    price: Number(data.price),
+    price: data.price,
     description: data.productDescription,
     condition: data.condition,
     model: data.model,
@@ -46,16 +44,17 @@ export async function action({ request }: any) {
       brand: data.brand,
       specifications: parseSpecs(data.specifications),
     };
-    await addProduct(electronics);
-  }
+   await addProduct(electronics);
+   alert("המוצר נוסף בהצלחה");
 
+  }
   return redirect(`/${data.category}`);
 }
 
 function parseSpecs(specString: string) {
   const specs = {};
   const entries = specString.split(",");
-  entries.forEach((entry) => {
+  entries.forEach((entry: string) => {
     const [key, value] = entry.split(":").map((s) => s.trim());
     if (key && value) {
       specs[key] = value;
@@ -187,11 +186,11 @@ function New() {
                     required
                   />
                 </label>
-                <label htmlFor="make" className="flex flex-col">
+                <label htmlFor="mileage" className="flex flex-col">
                   *קילומטראז'
                   <input
                     type="number"
-                    name="make"
+                    name="mileage"
                     className={inputClass}
                     placeholder="לדוגמא: טויטה"
                     required

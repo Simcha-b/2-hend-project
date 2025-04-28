@@ -97,16 +97,13 @@ function productList({ loaderData }: Route.ComponentProps) {
                   </button>
                 </Form>
               </div>
-              <div className="border-b-1">
-                <Accordion type="single" collapsible>
-                  <AccordionItem value="item-1">
-                    <AccordionTrigger>מחיר</AccordionTrigger>
-                    <AccordionContent>
-                      <div className="flex flex-col ">
-                        <Form
-                          method="get"
-                          onChange={(e) => submit(e.currentTarget)}
-                        >
+              <Form method="get" onChange={(e) => submit(e.currentTarget)}>
+                <div className="border-b-1">
+                  <Accordion type="single" collapsible>
+                    <AccordionItem value="item-1">
+                      <AccordionTrigger>מחיר</AccordionTrigger>
+                      <AccordionContent>
+                        <div className="flex flex-col ">
                           <input
                             type="range"
                             name="maxPrice"
@@ -127,13 +124,11 @@ function productList({ loaderData }: Route.ComponentProps) {
                                 loaderData.maxAvailablePrice}
                             </span>
                           </div>
-                        </Form>
-                      </div>
-                    </AccordionContent>
-                  </AccordionItem>
-                </Accordion>
-              </div>
-              <Form method="get" onChange={(e) => submit(e.currentTarget)}>
+                        </div>
+                      </AccordionContent>
+                    </AccordionItem>
+                  </Accordion>
+                </div>
                 <div className="border-b-1">
                   <Accordion type="single" collapsible>
                     <AccordionItem value="item-1">
@@ -154,7 +149,6 @@ function productList({ loaderData }: Route.ComponentProps) {
                               type="checkbox"
                               name="new"
                               value="true"
-                              d
                               checked={searchParams.get("new") === "true"}
                             />
                             <span className="text-sm">חדש</span>
@@ -195,11 +189,14 @@ function productList({ loaderData }: Route.ComponentProps) {
             </div>
           </div>
         )}
-        <div className="grid md:grid-cols-4 gap-5 max-w-4xl mx-auto">
-          {/* הצגת המוצרים */}
-          {products?.map((product: any) => (
-            <Card key={product.id} product={product} />
-          ))}
+        <div className="max-w-5xl mx-auto">
+          <div className="m-2 text-sm">מציג {products.length} תוצאות</div>
+          <div className="grid md:grid-cols-4 gap-6">
+            {/* הצגת המוצרים */}
+            {products?.map((product: any) => (
+              <Card key={product.id} product={product} />
+            ))}
+          </div>
         </div>
       </div>
     </>

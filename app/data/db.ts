@@ -5,7 +5,10 @@ import { readFile } from "fs/promises";
 export async function getProducts(): Promise<Product[]> {
   try {
     const data = await readFile("./app/data/products.json", "utf8");
-    const products = JSON.parse(data);
+    let products = JSON.parse(data);
+    products = products.sort((a, b) => {
+      Number(a.id) < Number(b.id);
+    });
     return products;
   } catch (err) {
     console.error("Error reading file:", err);
