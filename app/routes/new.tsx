@@ -7,6 +7,7 @@ import type { Product, Car, Electronics } from "~/types/products";
 
 export async function action({ request }: any) {
   const formData = await request.formData();
+  const images = formData.getAll("imagesBase64");
   const data = Object.fromEntries(formData);
 
   const baseProduct: Product = {
@@ -20,11 +21,12 @@ export async function action({ request }: any) {
     features: data.features.split(",") || [""],
     sellerInfo: {
       name: data.sellerName || "",
-      email: data.sellerContact || "",
+      email: data.sellerEmail || "",
       location: data.sellerLocation || "",
       contact: data.sellerContact || "",
     },
     addedAt: new Date().toLocaleString(),
+    image: images as string[], // מערך תמונות
   };
 
   if (data.category === "cars") {
@@ -41,12 +43,10 @@ export async function action({ request }: any) {
   if (data.category === "electronics") {
     const electronics: Electronics = {
       ...baseProduct,
-      brand: data.brand,
+      brand: data.make,
       specifications: parseSpecs(data.specifications),
     };
-   await addProduct(electronics);
-   alert("המוצר נוסף בהצלחה");
-
+    await addProduct(electronics);
   }
   return redirect(`/${data.category}`);
 }
@@ -66,6 +66,26 @@ function parseSpecs(specString: string) {
 function New() {
   const navigate = useNavigate();
   const [category, setCategory] = React.useState("cars");
+
+  const [imagesBase64, setImagesBase64] = React.useState<string[]>([]);
+
+  const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (!files) return;
+
+    const fileArray = Array.from(files);
+    const base64Promises = fileArray.map((file) => {
+      return new Promise<string>((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => resolve(reader.result as string);
+        reader.onerror = (error) => reject(error);
+      });
+    });
+
+    const images = await Promise.all(base64Promises);
+    setImagesBase64(images);
+  };
   const inputClass =
     "border mt-2 mt-2 p-2 rounded focus:outline-none focus:ring-2 focus:ring-green-500";
   return (
@@ -86,6 +106,7 @@ function New() {
         </p>
         <Form
           method="post"
+          encType="application/x-www-form-urlencoded"
           className="flex flex-col gap-8 w-[90%] border rounded-2xl p-6 "
         >
           <label className="flex flex-col">
@@ -260,11 +281,43 @@ function New() {
             <span>הוסף תמונות (מקסימום 5)*</span>
             <input
               type="file"
-              name="productImage"
-              // accept="image/*"
+              name="images"
+              accept="image/*"
+              multiple
               className="hidden"
+              onChange={handleImageChange}
             />
           </label>
+          {imagesBase64.map((base64, idx) => (
+            <input key={idx} type="hidden" name="imagesBase64" value={base64} />
+          ))}
+          <div className="flex flex-wrap gap-4 mt-4">
+            <div className="flex flex-wrap gap-4 mt-4">
+              {imagesBase64.map((base64, idx) => (
+                <div
+                  key={idx}
+                  className="relative w-32 h-32 rounded overflow-hidden border"
+                >
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setImagesBase64(imagesBase64.filter((_, i) => i !== idx));
+                    }}
+                    className="absolute top-1 right-1 bg-red-200 text-white
+                     rounded-full w-6 h-6 flex items-center justify-center text-sm
+                      hover:bg-red-600 hover:cursor-pointer"
+                  >
+                    ×
+                  </button>
+                  <img
+                    src={base64}
+                    alt={`תמונה ${idx + 1}`}
+                    className="object-cover w-full h-full"
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
           <div>
             <h1 className="text-1xl font-bold mb-2">פרטי המוכר</h1>
             <div className="grid grid-cols-2 grid-rows-2 gap-4">

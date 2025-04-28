@@ -56,7 +56,8 @@ export async function getProductByCategory(
       const query = filters.q.toLowerCase();
       products = products.filter((p) => p.name.toLowerCase().includes(query));
     }
-    return products;
+
+    return products.sort((a, b) => Number(b.id) - Number(a.id));
   } catch (err) {
     console.error("Error reading products", err);
     throw err;
