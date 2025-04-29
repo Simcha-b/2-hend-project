@@ -10,15 +10,14 @@ function About() {
         >
           <path
             stroke="currentColor"
-            strokeWidth="2"
+            stroke-width="2"
             d="M12 9v2m0 4h.01M4.93 4.93l14.14 14.14M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
           />
         </svg>
       </div>
       <div>
         <h3 className="text-lg font-semibold">  עובדים על זה...  </h3>
-        
-      </div>strokeWidth
+      </div>
     </div>
   );
 }

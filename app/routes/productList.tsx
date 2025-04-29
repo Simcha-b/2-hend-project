@@ -247,7 +247,7 @@ function productList({ loaderData }: Route.ComponentProps) {
             </div>
           </div>
         )}
-        <div className="max-w-5xl mx-auto">
+        <div className="mx-auto p-2">
           <div className="m-2 text-sm">מציג {products.length} תוצאות</div>
           {products.length<=0 && (<div>
             נא אפס את הסינונים
