@@ -7,9 +7,18 @@ import {
   removeAllFromCart,
   removeFromCart,
 } from "~/data/db";
-import { ArrowRight, CreditCard, ShoppingBag, ShoppingCart, Trash2Icon } from "lucide-react";
+import {
+  ArrowRight,
+  CreditCard,
+  MapPin,
+  PinIcon,
+  ShoppingBag,
+  ShoppingCart,
+  Trash2Icon,
+} from "lucide-react";
 import { Form, Link, useNavigate, useSubmit } from "react-router";
 import { Button } from "~/components/ui/button";
+import { Modal } from "~/components/Modal";
 
 export async function loader() {
   const items = await getCart();
@@ -48,7 +57,7 @@ function Cart({ loaderData }: Route.ComponentProps) {
   const { products, totalPrice } = loaderData;
   return (
     <>
-    <div>
+      <div>
         <Button
           variant="ghost"
           className="mr-5 mt-5 hover:cursor-pointer"
@@ -81,9 +90,9 @@ function Cart({ loaderData }: Route.ComponentProps) {
               {/* עגלה */}
               <div className="w-2/3 p-4 flex flex-col gap-5">
                 {products.map((p) => (
-                  <div className="flex w-full max-w-5xl h-35 bg-white rounded-xl shadow-md gap-4 text-right">
+                  <div className="flex w-full h-40 bg-white rounded-xl shadow-md gap-4 text-right">
                     {/* תמונה */}
-                    <div className="w-1/4 bg-gray-100 rounded-lg flex items-center justify-center">
+                    <div className="w-1/4">
                       <img
                         src={p.image[0]}
                         className="w-full h-full object-cover rounded-r-2xl"
@@ -94,10 +103,27 @@ function Cart({ loaderData }: Route.ComponentProps) {
                       {/* תיאור המוצר */}
                       <div className="flex flex-col justify-between">
                         <div>
-                          <Link to={`/product/${p?.id}`} className="text-lg font-bold hover:cursor-pointer hover:text-green-600">{p?.name}</Link> <br />
+                          <Link
+                            to={`/product/${p?.id}`}
+                            className="text-lg font-bold hover:cursor-pointer hover:text-green-600"
+                          >
+                            {p?.name}
+                          </Link>{" "}
+                          <span className="text-[12px] bg-gray-200 rounded-2xl p-1">
+                            {p.condition == "new" ? "חדש" : "משומש"}
+                          </span>
                           <p className="text-sm text-gray-500">
                             {p?.make || p?.brand} • {p?.model}
                           </p>
+                          <p className="text-sm text-gray-500">
+                            {p.description}
+                          </p>
+                          <div className="mt-8 flex gap-0.5">
+                            <MapPin size={18} />
+                            <p className=" text-sm text-gray-500">
+                              {p.sellerInfo.location}
+                            </p>
+                          </div>
                         </div>
                       </div>
                       {/* מחיר וכפתור */}
@@ -151,7 +177,7 @@ function Cart({ loaderData }: Route.ComponentProps) {
                       console.log("open");
                     }}
                   >
-                    <CreditCard/>
+                    <CreditCard />
                     <span>המשך לתשלום</span>
                   </button>
                 </div>
@@ -160,38 +186,11 @@ function Cart({ loaderData }: Route.ComponentProps) {
           </div>
         </div>
       )}
-      <Modal open={open} setOpen={setOpen} />;
+      <Modal open={open} setOpen={setOpen} message="אופס... האתר להדגמה בלבד..." />;
     </>
   );
 }
 
-export function Modal({
-  open,
-  setOpen,
-  message,
-}: {
-  open: boolean;
-  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  message: string;
-}) {
-  return (
-    open && (
-      <div className="fixed inset-0 flex items-center justify-center z-50">
-        <div className="fixed inset-0 bg-gray-900 opacity-50 z-40"></div>
 
-        <div className="bg-white rounded-lg p-8 max-w-xs md:max-w-lg w-full z-50">
-          <h2 className="text-2xl font-bold mb-4">הודעה</h2>
-          <p className="mb-4">אופס... האתר להדגמה בלבד...</p>
-          <button
-            className="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600 hover:cursor-pointer mt-4"
-            onClick={() => setOpen(false)}
-          >
-            סגור
-          </button>
-        </div>
-      </div>
-    )
-  );
-}
 
 export default Cart;
