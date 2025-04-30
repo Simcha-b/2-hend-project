@@ -104,7 +104,7 @@ function productList({ loaderData }: Route.ComponentProps) {
       </div>
       <div className="flex">
         {allMakes?.length > 0 && (
-          <div className="w-64 flex flex-col gap-6 mr-6 pl-6 border-l ">
+          <div className="w-80 flex flex-col gap-6 mr-6 pl-6 border-l ">
             {/* פילטרים */}
             <div>
               <div className="flex justify-between mb-5">
@@ -209,7 +209,7 @@ function productList({ loaderData }: Route.ComponentProps) {
                       <AccordionTrigger>שנת ייצור</AccordionTrigger>
                       <AccordionContent>
                         <div className="flex justify-between gap-4 p-4 border">
-                          <div className="flex flex-col gap-4 max-h-60">
+                          <div className="flex flex-col gap-4 ">
                             <label htmlFor="">משנה:</label>
                             <select
                               name="fromYear"

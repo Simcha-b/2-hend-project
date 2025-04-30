@@ -249,6 +249,8 @@ export default function productDetails({ loaderData }: Route.ComponentProps) {
           <span>{modelMessage}</span>
         </div>
       )}
+      
+
     </>
   );
 }

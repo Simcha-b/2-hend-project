@@ -75,7 +75,7 @@ export async function getProductById(
 export async function addProduct(product: Car | Electronics) {
   try {
     const data = await getProducts();
-    product.id = data[data.length - 1].id + 1;
+    product.id = String(Number(data[data.length - 1].id) + 1);
     data.push(product);
     writeFileSync("./app/data/products.json", JSON.stringify(data));
     console.log("Product added:", product);
@@ -85,6 +85,24 @@ export async function addProduct(product: Car | Electronics) {
     throw err;
   }
 }
+//remove product by id
+export async function removeProductById(id: string) {
+  try {
+    const data = await getProducts();
+    const product = data.find((p) => p.id === id);
+    if (!product) {
+      throw new Error("Product not found");
+    }
+    const newData = data.filter((p) => p.id !== id);
+    writeFileSync("./app/data/products.json", JSON.stringify(newData));
+    console.log("Product removed:", product);
+    return product;
+  } catch (err) {
+    console.error("Error removing product:", err);
+    throw err;
+  }
+}
+
 
 /**------------------filters--------------------- */
 
