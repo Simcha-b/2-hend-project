@@ -19,7 +19,7 @@ export async function action({ request }: any) {
     id: Date.now().toString(),
     category: data.category,
     name: data.name,
-    price: data.price,
+    price: Number(data.price),
     description: data.productDescription,
     condition: data.condition,
     model: data.model,
@@ -49,7 +49,7 @@ export async function action({ request }: any) {
     const electronics: Electronics = {
       ...baseProduct,
       brand: data.make,
-      specifications: parseSpecs(data.specifications),
+      specifications: data.parseSpecs ? parseSpecs(data.specifications) : {},
     };
     await addProduct(electronics);
   }
@@ -82,15 +82,15 @@ function New() {
   const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
     if (!files) return;
-  
+
     const fileArray = Array.from(files);
-  
+
     // בדיקה אם יחרוג מהמגבלה
     if (imagesBase64.length + fileArray.length > 5) {
       alert("אפשר לבחור עד 5 תמונות בלבד.");
       return;
     }
-  
+
     const base64Promises = fileArray.map((file) => {
       return new Promise<string>((resolve, reject) => {
         const reader = new FileReader();
@@ -99,10 +99,10 @@ function New() {
         reader.onerror = (error) => reject(error);
       });
     });
-  
+
     const images = await Promise.all(base64Promises);
-  
-    setImagesBase64((prev) => [...prev, ...images]);  
+
+    setImagesBase64((prev) => [...prev, ...images]);
   };
   const inputClass =
     "border mt-2 mt-2 p-2 rounded focus:outline-none focus:ring-2 focus:ring-green-500";
@@ -287,7 +287,6 @@ function New() {
                     placeholder="רשום מפרט מרכזי (לדוגמה: מעבד: M1 Pro, זיכרון: 16GB, אחסון: 512GB)"
                     className={inputClass}
                     rows={4}
-                    required
                   ></textarea>
                 </label>
               </div>
@@ -397,9 +396,9 @@ function New() {
       </div>
       {fetcher.data?.success && (
         <Modal
-          open={open}
+          open={true}
           setOpen={setOpen}
-          message={"!המוצר נוסף בהצלחה"}
+          message={"המודעה פורסמה בהצלחה!"}
           onClose={() => {
             navigate(`/${fetcher.data?.category}`);
           }}

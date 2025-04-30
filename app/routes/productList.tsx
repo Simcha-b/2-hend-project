@@ -74,10 +74,10 @@ function productList({ loaderData }: Route.ComponentProps) {
 
   return (
     <>
-      <h1 className="text-2xl p-5 font-bold">{titleMap[category]}</h1>
+      <h1 className="text-2xl mt-2 p-3 font-bold">{titleMap[category]}</h1>
       <div className="flex">
         {allMakes?.length > 0 && (
-          <div className="w-64 flex flex-col gap-6 mr-6">
+          <div className="w-64 flex flex-col gap-6 mr-6 pl-6 border-l ">
             {/* חיפוש */}
             <Form
               method="get"
@@ -247,11 +247,9 @@ function productList({ loaderData }: Route.ComponentProps) {
             </div>
           </div>
         )}
-        <div className="mx-auto p-2">
-          <div className="m-2 text-sm">מציג {products.length} תוצאות</div>
-          {products.length<=0 && (<div>
-            נא אפס את הסינונים
-            </div>)}
+        <div className="mx-auto p-2 ml-4 mr-4">
+          <div className="m-2 text-md">מציג {products.length} תוצאות</div>
+          {products.length <= 0 && <div>נא אפס את הסינונים</div>}
           <div className="grid md:grid-cols-4 gap-6">
             {/* הצגת המוצרים */}
             {products?.map((product: any) => (

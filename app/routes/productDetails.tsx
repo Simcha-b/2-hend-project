@@ -16,8 +16,7 @@ import {
   MapPinned,
   Phone,
 } from "lucide-react";
-import { useState } from "react";
-
+import { useEffect, useState } from "react";
 export async function loader({ params }: Route.LoaderArgs) {
   const { product, inCart } = await getProductById(params.id!);
   if (!product) {
@@ -31,8 +30,10 @@ export async function action({ request }: Route.ActionArgs) {
   const inCart = await isProductInCart(productId);
   if (inCart) {
     await removeFromCart(productId);
+    return { status: "removed" };
   } else {
     await addToCart(productId);
+    return { status: "added" };
   }
 }
 
@@ -53,7 +54,21 @@ export default function productDetails({ loaderData }: Route.ComponentProps) {
     Array.isArray(product.image) ? product.image[0] : ""
   );
   const navigate = useNavigate();
-
+  const [showModal, setShowModal] = useState(false);
+  const [modelMessage, setModelMessage] = useState("");
+  useEffect(() => {
+    if (fetcher.data?.status === "added") {
+      setModelMessage("המוצר נוסף לעגלה");
+      setShowModal(true);
+    }
+    if (fetcher.data?.status === "removed") {
+      setModelMessage("המוצר הוסר מהעגלה");
+      setShowModal(true);
+    }
+    setTimeout(() => {
+      setShowModal(false);
+    }, 3000);
+  }, [fetcher]);
   return (
     <>
       <div>
@@ -137,24 +152,32 @@ export default function productDetails({ loaderData }: Route.ComponentProps) {
 
             {isCar(product) && (
               <div className="pt-4 pb-4 border-t border-b">
-              <h3 className="font-semibold text-lg mb-4">פרטי רכב</h3>
-              <table className="table-auto w-full border-collapse border border-gray-300">
-                <tbody>
-                  <tr className="border-b">
-                    <td className="px-4 py-2 font-medium bg-gray-100 border border-gray-300">דגם:</td>
-                    <td className="px-4 py-2">{product.model}</td>
-                  </tr>
-                  <tr className="border-b">
-                    <td className="px-4 py-2 font-medium bg-gray-100 border border-gray-300">קילומטראז':</td>
-                    <td className="px-4 py-2">{product.Mileage.toLocaleString()} ק״מ</td>
-                  </tr>
-                  <tr>
-                    <td className="px-4 py-2 font-medium bg-gray-100 border border-gray-300">צבע:</td>
-                    <td className="px-4 py-2">{product.color}</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
+                <h3 className="font-semibold text-lg mb-4">פרטי רכב</h3>
+                <table className="table-auto w-full border-collapse border border-gray-300">
+                  <tbody>
+                    <tr className="border-b">
+                      <td className="px-4 py-2 font-medium bg-gray-100 border border-gray-300">
+                        דגם:
+                      </td>
+                      <td className="px-4 py-2">{product.model}</td>
+                    </tr>
+                    <tr className="border-b">
+                      <td className="px-4 py-2 font-medium bg-gray-100 border border-gray-300">
+                        קילומטראז':
+                      </td>
+                      <td className="px-4 py-2">
+                        {product.Mileage.toLocaleString()} ק״מ
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className="px-4 py-2 font-medium bg-gray-100 border border-gray-300">
+                        צבע:
+                      </td>
+                      <td className="px-4 py-2">{product.color}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
             )}
             {isElectronics(product) && (
               <div className="pt-4 border-t">
@@ -208,6 +231,24 @@ export default function productDetails({ loaderData }: Route.ComponentProps) {
           </div>
         </div>
       </div>
+      {showModal && (
+        <div
+          className={`fixed top-4 right-4 z-50 flex items-center gap-3 p-4 rounded-xl shadow-xl text-sm font-semibold
+      ${
+        modelMessage.includes("נוסף")
+          ? "bg-green-100 text-green-800"
+          : "bg-red-100 text-red-800"
+      }`}
+          role="alert"
+        >
+          {modelMessage.includes("נוסף") ? (
+            <Check className="w-5 h-5" />
+          ) : (
+            <ArrowRight className="w-5 h-5" />
+          )}
+          <span>{modelMessage}</span>
+        </div>
+      )}
     </>
   );
 }
