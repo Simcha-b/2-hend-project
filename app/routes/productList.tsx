@@ -19,7 +19,7 @@ import {
 } from "react-router";
 import type { Route } from "./+types/productList";
 import { Input } from "~/components/ui/input";
-import { SearchIcon } from "lucide-react";
+import { Search, SearchIcon } from "lucide-react";
 
 export async function loader({ request, params }: LoaderFunctionArgs) {
   const url = new URL(request.url);
@@ -75,28 +75,36 @@ function productList({ loaderData }: Route.ComponentProps) {
   return (
     <>
       <h1 className="text-2xl mt-2 p-3 font-bold">{titleMap[category]}</h1>
+      {/* חיפוש */}
+      <div className="flex justify-center">
+        <Form
+          method="get"
+          onChange={(event) => {
+            const isFirstSearch = q === null;
+            submit(event.currentTarget, {
+              replace: !isFirstSearch,
+            });
+          }}
+        >
+          <div className="relative w-2xl">
+            <Search
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400"
+              size={20}
+            />
+            <Input
+              type="search"
+              placeholder="חיפוש..."
+              id="q"
+              name="q"
+              defaultValue={q || ""}
+              className="pl-10 pr-10"   
+            />
+          </div>
+        </Form>
+      </div>
       <div className="flex">
         {allMakes?.length > 0 && (
           <div className="w-64 flex flex-col gap-6 mr-6 pl-6 border-l ">
-            {/* חיפוש */}
-            <Form
-              method="get"
-              onChange={(event) => {
-                const isFirstSearch = q === null;
-                submit(event.currentTarget, {
-                  replace: !isFirstSearch,
-                });
-              }}
-            >
-              <Input
-                type="search"
-                placeholder="חיפוש..."
-                id="q"
-                name="q"
-                defaultValue={q || ""}
-                className="border text-md"
-              />{" "}
-            </Form>
             {/* פילטרים */}
             <div>
               <div className="flex justify-between mb-5">
